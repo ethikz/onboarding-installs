@@ -26,17 +26,6 @@ if [ ! -f "$HOME/Library/Fonts/*Powerline.*"]; then
   rm -rf fonts
 fi
 
-if [ -f "$HOME/.oh-my-zsh" ]; then
-  cd ~/.oh-my-zsh
-  wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
-elif [ ! -f "$HOME/.oh-my-zsh" ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-  exit
-  chsh -s "$(which zsh)"
-  source ~/.zshrc
-  cd ..
-fi
-
 if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
@@ -64,3 +53,14 @@ if [ ! -f "$HOME/.atom" ]; then
 fi
 
 xcode-select --install
+
+if [ -f "$HOME/.oh-my-zsh" ]; then
+  cd ~/.oh-my-zsh
+  wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
+elif [ ! -f "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  exit
+  chsh -s "$(which zsh)"
+  source ~/.zshrc
+  cd ..
+fi

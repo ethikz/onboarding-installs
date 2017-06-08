@@ -231,4 +231,15 @@ if [ ! -f "$HOME/.ssh" ]; then
   cd ..
 fi
 
+if [ -f "$HOME/.oh-my-zsh" ]; then
+   cd ~/.oh-my-zsh
+   wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
+elif [ ! -f "$HOME/.oh-my-zsh" ]; then
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+   exit
+   chsh -s "$(which zsh)"
+   source ~/.zshrc
+   cd ..
+fi
+
 fancy_echo 'All done!'

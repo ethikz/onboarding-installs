@@ -1,12 +1,5 @@
 #!/bin/sh
 
-fancy_echo() {
-  local fmt="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
-}
-
 cd ~
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile

@@ -41,7 +41,10 @@ change_shell_to_zsh() {
   fancy_echo "Please enter your password to continue."
   echo "Note that there won't be visual feedback when you type your password."
   echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  exit
   chsh -s "$(which zsh)"
+  source ~/.zshrc
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
 }
@@ -186,6 +189,7 @@ else
 fi
 
 sudo chmod -R a+X "/Library"
+sudo chmod -R a+X "$HOME/.rvm/"
 
 fancy_echo 'Updating Rubygems...'
 gem update --system

@@ -17,6 +17,7 @@ brew 'pkg-config'
 brew 'node'
 brew 'librsvg'
 brew 'imagemagick', args: ['with-librsvg']
+brew 'apm-bash-completion'
 brew 'zsh'
 brew 'zsh-completions'
 

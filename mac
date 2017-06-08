@@ -186,6 +186,7 @@ else
 fi
 
 sudo chmod -R a+X "/Library"
+sudo chown -R `whoami` "/Library/Ruby"
 
 fancy_echo 'Updating Rubygems...'
 gem update --system

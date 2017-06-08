@@ -44,10 +44,12 @@ if [ ! -f "$HOME/.atom" ]; then
   if [ ! -f "$HOME/.atom/Makefile" ] || [ ! -f "$HOME/.atom/packages.list" ]; then
     if [ ! -f "$HOME/.atom/Makefile" ]; then
       curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/Makefile
+      chmod +x $HOME/.atom/Makefile
     fi
 
     if [ ! -f "$HOME/.atom/packages.list" ]; then
       curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/packages.list
+      chmod +x $HOME/.atom/packages.list
     fi
   fi
   

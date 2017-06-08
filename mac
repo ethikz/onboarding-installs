@@ -1,0 +1,235 @@
+#!/bin/bash
+
+# Welcome to the monfresh laptop script!
+# Be prepared to turn your laptop (or desktop)
+# into an awesome development machine.
+
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
+append_to_file() {
+  local file="$1"
+  local text="$2"
+
+  if ! grep -qs "^$text$" "$file"; then
+    printf "\n%s\n" "$text" >> "$file"
+  fi
+}
+
+create_zshrc_and_set_it_as_shell_file() {
+  if [ ! -f "$HOME/.zshrc" ]; then
+    curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.zshrc
+    curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.vimrc
+  fi
+
+  shell_file="$HOME/.zshrc"
+}
+
+create_bash_profile_and_set_it_as_shell_file() {
+  if [ ! -f "$HOME/.bash_profile" ]; then
+    touch "$HOME/.bash_profile"
+  fi
+
+  shell_file="$HOME/.bash_profile"
+}
+
+change_shell_to_zsh() {
+  fancy_echo "Please enter your password to continue."
+  echo "Note that there won't be visual feedback when you type your password."
+  echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  exit
+  chsh -s "$(which zsh)"
+  source shell_file
+  echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
+  echo "The instructions for changing shells manually are available in the README."
+  
+  cd ~/Downloads/onboarding-installs/
+  ./laptop
+}
+
+# shellcheck disable=SC2154
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+fi
+
+case "$SHELL" in
+  */zsh) :
+    create_zshrc_and_set_it_as_shell_file
+    ;;
+  *)
+    create_bash_profile_and_set_it_as_shell_file
+    if [ -z "$CI" ]; then
+      bold=$(tput bold)
+      normal=$(tput sgr0)
+      echo "Want to switch your shell from the default ${bold}bash${normal} to ${bold}zsh${normal}?"
+      echo "Both work fine for development, and ${bold}zsh${normal} has some extra "
+      echo "features for customization and tab completion."
+      echo "If you aren't sure or don't care, we recommend ${bold}zsh${normal}."
+      echo -n "Press ${bold}y${normal} to switch to zsh, ${bold}n${normal} to keep bash: "
+      read -r -n 1 response
+      if [ "$response" = "y" ]; then
+        fancy_echo "=== Getting ready to change your shell to zsh. ==="
+        if ! grep -qs "$(which zsh)" /etc/shells; then
+          echo "It looks like your version of zsh is missing from ${bold}/etc/shells${normal}."
+          echo "It must be added there manually before your shell can be changed."
+          echo "Open ${bold}/etc/shells${normal} with your favorite text editor,"
+          echo "then add ${bold}$(which zsh)${normal} in a new line and save the file."
+          echo -n "Once you've added it, press ${bold}y${normal} to continue, or ${bold}n${normal} to cancel: "
+          read -r -n 1 response
+          if [ "$response" = "y" ]; then
+            change_shell_to_zsh
+          else
+            fancy_echo "Shell will not be changed."
+          fi
+        else
+          change_shell_to_zsh
+        fi
+      else
+        fancy_echo "Shell will not be changed."
+      fi
+    else
+      fancy_echo "CI System detected, will not change shells"
+    fi
+    ;;
+esac
+
+brew_is_installed() {
+  brew list -1 | grep -Fqx "$1"
+}
+
+tap_is_installed() {
+  brew tap -1 | grep -Fqx "$1"
+}
+
+gem_install_or_update() {
+  if gem list "$1" | grep "^$1 ("; then
+    fancy_echo "Updating %s ..." "$1"
+    gem update "$@"
+  else
+    fancy_echo "Installing %s ..." "$1"
+    gem install "$@"
+  fi
+}
+
+app_is_installed() {
+  local app_name
+  app_name=$(echo "$1" | cut -d'-' -f1)
+  find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
+}
+
+latest_installed_ruby() {
+  find "$HOME/.rvm" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+'
+}
+
+switch_to_latest_ruby() {
+  # shellcheck disable=SC1091
+  rvm use "ruby-" + $(latest_installed_ruby)
+}
+
+append_to_file "$shell_file" "alias laptop='bash <(curl -s https://raw.githubusercontent.com/ethikz/onboarding-installs/master/laptop)'"
+
+# shellcheck disable=SC2016
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+else
+  fancy_echo "Homebrew already installed. Skipping ..."
+fi
+
+# Remove brew-cask since it is now installed as part of brew tap caskroom/cask.
+# See https://github.com/caskroom/homebrew-cask/releases/tag/v0.60.0
+if brew_is_installed 'brew-cask'; then
+  brew uninstall --force 'brew-cask'
+fi
+
+if tap_is_installed 'caskroom/versions'; then
+  brew untap caskroom/versions
+fi
+
+fancy_echo "Updating Homebrew ..."
+cd "$(brew --repo)" && git fetch && git reset --hard origin/master && brew update
+
+fancy_echo "Verifying the Homebrew installation..."
+if brew doctor; then
+  fancy_echo "Your Homebrew installation is good to go."
+else
+  fancy_echo "Your Homebrew installation reported some errors or warnings."
+  echo "Review the Homebrew messages to see if any action is needed."
+fi
+
+fancy_echo "Installing formulas and casks from the Brewfile ..."
+if brew bundle --file="$HOME/Brewfile"; then
+  fancy_echo "All formulas and casks were installed successfully."
+else
+  fancy_echo "Some formulas or casks failed to install."
+  echo "This is usually due to one of the Mac apps being already installed,"
+  echo "in which case, you can ignore these errors."
+fi
+
+# shellcheck disable=SC2016
+append_to_file "$HOME/.gemrc" 'gem: --no-document'
+
+if hash rvm &> /dev/null; then
+  echo "RVM already installed"
+else
+  echo "Installing RVM..."
+  curl -sSL https://get.rvm.io | bash -s stable --ruby
+  
+  source ~/.rvm/scripts/rvm
+  rvm requirements
+
+  append_to_file "$shell_file" "rvm use ruby-$(latest_installed_ruby)"
+fi
+
+sudo chmod -R a+X "/Library"
+
+fancy_echo 'Updating Rubygems...'
+gem update --system
+
+gem_install_or_update 'bundler'
+
+fancy_echo "Configuring Bundler ..."
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
+
+fancy_echo '...Finished Ruby installation checks.'
+
+no_prompt_customizations_in_shell_file() {
+  ! grep -qs -e "PS1=" -e "precmd" -e "PROMPT=" "$shell_file"
+}
+
+no_zsh_frameworks() {
+  [ ! -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.zpresto" ] && [ ! -d "$HOME/.zim" ] && [ ! -d "$HOME/.zplug" ]
+}
+
+if [ -f "$HOME/.laptop.local" ]; then
+  # shellcheck source=/dev/null
+  cd ~/
+  chmod +x .laptop.local
+  ./.laptop.local
+fi
+
+if [ ! -f "$HOME/.ssh" ]; then
+  mkdir ~/.ssh/
+  cd ~/.ssh/
+  echo -n "What is your BB&T email?"
+  read response
+  
+  if [ ! -f "$HOME/.ssh/$response" ]; then
+    ssh-keygen -t rsa -C "$response" -P "" -f $response
+  fi
+  
+  cd ..
+fi
+
+fancy_echo 'All done!'

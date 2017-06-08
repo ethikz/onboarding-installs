@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd ~
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/.laptop.local
+/usr/bin/env bash mac 2>&1 | tee ~/laptop.log

@@ -1,12 +1,5 @@
 #!/bin/sh
 
-fancy_echo() {
-  local fmt="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
-}
-
 fancy_echo "Running your customizations from ~/.laptop.local ..."
 
 if [ -f "$HOME/Brewfile.local" ]; then
@@ -31,25 +24,13 @@ if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then
   vim +PluginInstall +qall
 fi
 
-if [ ! -f "$HOME/.atom" ]; then
+if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
   mkdir ~/.atom
   open -a 'Atom'
   cd ~/.atom
-  
-  if [ ! -f "$HOME/.atom/Makefile" ] || [ ! -f "$HOME/.atom/packages.list" ]; then
-    if [ ! -f "$HOME/.atom/Makefile" ]; then
-      curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/Makefile
-      chmod +x $HOME/.atom/Makefile
-    fi
-
-    if [ ! -f "$HOME/.atom/packages.list" ]; then
-      curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/packages.list
-      chmod +x $HOME/.atom/packages.list
-    fi
-  fi
-  
-  make
-
+  curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
+  chmod +x $HOME/.atom/atom_packages.txt
+  apm install --packages-file my_atom_packages.txt
   cd ..
 fi
 

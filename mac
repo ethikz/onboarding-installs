@@ -4,13 +4,6 @@
 # Be prepared to turn your laptop (or desktop)
 # into an awesome development machine.
 
-fancy_echo() {
-  local fmt="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
-}
-
 append_to_file() {
   local file="$1"
   local text="$2"
@@ -121,7 +114,12 @@ app_is_installed() {
   local app_name
   app_name=$(echo "$1" | cut -d'-' -f1)
   find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
+  defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname "$app_name*".app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+
 }
+
+killall Dock
+
 
 latest_installed_ruby() {
   find "$HOME/.rvm" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+'

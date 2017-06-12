@@ -1,6 +1,6 @@
 Laptop
 ======
-[![Build Status](https://travis-ci.org/ethikz/laptop.svg)](https://travis-ci.org/ethikz/laptop)
+[![Build Status](https://travis-ci.org/ethikz/onboarding-installs.svg)](https://travis-ci.org/ethikz/onboarding-installs)
 
 Laptop is a script to set up an OS X computer for web development, and to keep
 it up to date.

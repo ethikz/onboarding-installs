@@ -18,7 +18,7 @@ if [ -f "$HOME/Brewfile.local" ]; then
 fi
 
 if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
-  for dir in */
+  for dir in ~
   do
     (
     cd "$dir" || exit
@@ -37,7 +37,7 @@ if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then
 fi
 
 if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
-  for dir in */
+  for dir in ~
   do
     (
     cd "$dir" || exit

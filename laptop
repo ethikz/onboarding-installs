@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for ~ in */
+for dir in */
 do
   cd "$dir" || exit
   curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac

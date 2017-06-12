@@ -37,13 +37,18 @@ if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then
 fi
 
 if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
-  mkdir ~/.atom
-  open -a 'Atom'
-  cd ~/.atom
-  curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
-  chmod +x $HOME/.atom/atom_packages.txt
-  apm install --packages-file my_atom_packages.txt
-  cd ..
+  for dir in */
+  do
+    (
+    cd "$dir" || exit
+    open -a 'Atom'
+    cd ~/.atom
+    curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
+    chmod +x "$HOME/.atom/atom_packages.txt"
+    apm install --packages-file my_atom_packages.txt
+    cd ..
+    )
+  done
 fi
 
 xcode-select --install

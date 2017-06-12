@@ -222,7 +222,7 @@ if [ -f "$HOME/.laptop.local" ]; then
 fi
 
 if [ ! -f "$HOME/.ssh" ]; then
-for dir in ~
+for dir in ~/*
   do
     (
     cd "$dir" || exit

@@ -18,12 +18,17 @@ if [ -f "$HOME/Brewfile.local" ]; then
 fi
 
 if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
-  cd ~/
-  git clone https://github.com/powerline/fonts.git
-  cd fonts
-  ./install.sh
-  cd ..
-  rm -rf fonts
+  for dir in */
+  do
+    (
+    cd "$dir" || exit
+    git clone https://github.com/powerline/fonts.git
+    cd fonts
+    ./install.sh
+    cd ..
+    rm -rf fonts
+    )
+  done
 fi
 
 if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then

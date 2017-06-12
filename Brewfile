@@ -21,15 +21,7 @@ brew 'apm-bash-completion'
 brew 'zsh'
 brew 'zsh-completions'
 
-cask 'java'
-cask 'alfred'
-cask 'atom'
-cask 'flowdock'
-cask 'firefox'
-cask 'google-chrome'
-cask 'sourcetree'
-cask 'citrix-receiver'
-cask 'adobe-creative-cloud'
-cask 'android-platform-tools'
-cask 'android-sdk'
-cask 'android-studio'
+for app in 'java', 'alfred', 'atom', 'flowdock', 'firefox', 'google-chrome', 'sourcetree', 'citrix-receiver', 'adobe-creative-cloud', 'android-platform-tools', 'android-sdk', 'android-studio'
+; do
+  cask $app
+done 

@@ -23,9 +23,9 @@ if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
     (
     cd "$dir" || exit
     git clone https://github.com/powerline/fonts.git
-    cd fonts
+    cd fonts || exit
     ./install.sh
-    cd ..
+    cd .. || exit
     rm -rf fonts
     )
   done
@@ -42,11 +42,11 @@ if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
     (
     cd "$dir" || exit
     open -a 'Atom'
-    cd ~/.atom
+    cd ~/.atom || exit
     curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
     chmod +x "$HOME/.atom/atom_packages.txt"
     apm install --packages-file my_atom_packages.txt
-    cd ..
+    cd .. || exit
     )
   done
 fi

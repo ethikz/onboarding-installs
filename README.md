@@ -86,8 +86,17 @@ What it sets up
 * [ruby-install] for installing different versions of Ruby
 * [Atom] for coding all the things
 * [Zsh] as your shell (if you opt in)
-* [Zsh Themes]
+* [Zsh Themes] themse for shell
 * [Dotfiles] things like .zshrc, .vimrc for same configuration across computers
+* [Java]
+* [Alfred]
+* [Flowdock]
+* [Google Chrome] browser
+* [Citrix Receiver]
+* [Adobe Creative Cloud]
+* [Android Platform Tools]
+* [Android SDK]
+* [Android Studio]
 
 [Bundler]: http://bundler.io/
 [RVM]: https://rvm.io/rvm/install
@@ -103,6 +112,13 @@ What it sets up
 [Zsh]: http://www.zsh.org/
 [Zsh Themes]: https://github.com/ethikz/dotfiles/zsh_themes
 [Dotfiles]: https://github.com/ethikz/dotfiles
+[Java]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+[Alfred]: https://www.alfredapp.com/
+[Flowdock]: https://www.flowdock.com/
+[Google Chrome]: https://www.google.com/chrome/index.html
+[Citrix Receiver]: https://www.citrix.com/products/receiver/
+[Adobe Creative Cloud]: http://www.adobe.com/creativecloud.html
+[Android Studio]: https://developer.android.com/studio/install.html
 
 It should take less than 15 minutes to install (depends on your machine and
 internet connection).

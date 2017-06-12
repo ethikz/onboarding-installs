@@ -32,7 +32,7 @@ if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then
 fi
 
 if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
-  cd ~/.atom || exit
+  cd ~/ || exit
   open -a 'Atom'
   cd ~/.atom || exit
   curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt

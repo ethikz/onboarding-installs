@@ -18,17 +18,12 @@ if [ -f "$HOME/Brewfile.local" ]; then
 fi
 
 if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
-  for dir in ~/*
-  do
-    (
-    cd "$dir" || exit
-    git clone https://github.com/powerline/fonts.git
-    cd fonts || exit
-    ./install.sh
-    cd .. || exit
-    rm -rf fonts
-    )
-  done
+  cd ~ || exit
+  git clone https://github.com/powerline/fonts.git
+  cd fonts || exit
+  ./install.sh
+  cd .. || exit
+  rm -rf fonts
 fi
 
 if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then
@@ -37,18 +32,13 @@ if [ ! -f "$HOME/.vim/bundle/Vundle.vim" ]; then
 fi
 
 if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
-  for dir in ~/*
-  do
-    (
-    cd "$dir" || exit
-    open -a 'Atom'
-    cd ~/.atom || exit
-    curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
-    chmod +x "$HOME/.atom/atom_packages.txt"
-    apm install --packages-file my_atom_packages.txt
-    cd .. || exit
-    )
-  done
+  cd ~/.atom || exit
+  open -a 'Atom'
+  cd ~/.atom || exit
+  curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
+  chmod +x "$HOME/.atom/atom_packages.txt"
+  apm install --packages-file my_atom_packages.txt
+  cd .. || exit
 fi
 
 xcode-select --install

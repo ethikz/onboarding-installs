@@ -23,7 +23,7 @@ number=0
 while read -r app; do
     [[ "$app" =~ ^'brew'.*$ ]] && continue
     echo "${app}"
-    cask $app
+    cask $($app)
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname $app*.app</string><key>_CFURLStringType</key><integer>$(number + 1)</integer></dict></dict></dict>"
 done < "$file"
 

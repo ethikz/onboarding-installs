@@ -44,6 +44,8 @@ change_shell_to_zsh() {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
   exit
   chsh -s "$(which zsh)"
+
+  # shellcheck source=~/.zshrc
   source "$HOME/.zshrc"
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
@@ -186,6 +188,8 @@ else
   echo "Installing RVM..."
   curl -sSL https://get.rvm.io | bash -s stable --ruby
   
+  # shellcheck source=~/.rvm/scripts/rvm
+  
   source "$HOME/.rvm/scripts/rvm"
   rvm requirements
 
@@ -194,7 +198,7 @@ fi
 
 sudo chmod -R a+X "/Library"
 sudo chmod -R a+X "$HOME/.rvm/"
-sudo chown -R "`whoami`" "/Library/Ruby"
+sudo chown -R "$(whoami) /Library/Ruby"
 
 fancy_echo 'Updating Rubygems...'
 gem update --system
@@ -229,7 +233,7 @@ if [ ! -f "$HOME/.ssh" ]; then
   read -r response
   
   if [ ! -f "$HOME/.ssh/$response" ]; then
-    ssh-keygen -t rsa -C "$response" -P "" -f $response
+    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
   fi
   
   cd ..
@@ -242,6 +246,8 @@ elif [ ! -f "$HOME/.oh-my-zsh" ]; then
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
    exit
    chsh -s "$(which zsh)"
+   
+   # shellcheck source=~/.rvm/scripts/rvm
    source "$HOME/.zshrc"
    cd ..
 fi

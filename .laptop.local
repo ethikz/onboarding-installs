@@ -1,6 +1,7 @@
 #!/bin/sh
 
 fancy_echo() {
+  # shellcheck disable=SC2039
   local fmt="$1"; shift                                                               
   
   # shellcheck disable=SC2059

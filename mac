@@ -44,6 +44,7 @@ change_shell_to_zsh() {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
   exit
   chsh -s "$(which zsh)"
+  # shellcheck source=~/.zshrc
   source "$HOME/.zshrc"
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
@@ -233,6 +234,7 @@ elif [ ! -f "$HOME/.oh-my-zsh" ]; then
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
    exit
    chsh -s "$(which zsh)"
+   # shellcheck source=~/.zshrc
    source "$HOME/.zshrc"
    cd .. || exit
 fi

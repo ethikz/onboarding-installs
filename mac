@@ -45,8 +45,8 @@ change_shell_to_zsh() {
   exit
   chsh -s "$(which zsh)"
   
-  # shellcheck source=/Users/$USER/.zshrc
-  source "~/.zshrc"
+  # shellcheck source=/dev/null
+  source "$HOME/.zshrc"
   
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
@@ -237,8 +237,8 @@ elif [ ! -f "$HOME/.oh-my-zsh" ]; then
    exit
    chsh -s "$(which zsh)"
    
-   # shellcheck source=/Users/$USER/.zshrc
-   source "~/.zshrc"
+   # shellcheck source=/dev/null
+   source "$HOME/.zshrc"
    
    cd .. || exit
 fi

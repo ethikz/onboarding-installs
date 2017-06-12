@@ -1,6 +1,6 @@
 Laptop
 ======
-[![Build Status](https://travis-ci.org/monfresh/laptop.svg)](https://travis-ci.org/monfresh/laptop)
+[![Build Status](https://travis-ci.org/ethikz/laptop.svg)](https://travis-ci.org/ethikz/laptop)
 
 Laptop is a script to set up an OS X computer for web development, and to keep
 it up to date.
@@ -39,10 +39,10 @@ and once it appears, press `return` to launch it.
 In your Terminal window, copy and paste the command below, then press `return`.
 
 ```sh
-bash <(curl -s https://raw.githubusercontent.com/monfresh/laptop/master/laptop)
+bash <(curl -s https://raw.githubusercontent.com/ethikz/onboarding-installs/master/laptop)
 ```
 
-The [script](https://github.com/monfresh/laptop/blob/master/mac) itself is
+The [script](https://github.com/ethikz/onboarding-installs/blob/master/mac) itself is
 available in this repo for you to review if you want to see what it does
 and how it works.
 
@@ -69,78 +69,51 @@ Debugging
 Your last Laptop run will be saved to a file called `laptop.log` in your home
 folder. Read through it to see if you can debug the issue yourself. If not,
 copy the entire contents of `laptop.log` into a
-[new GitHub Issue](https://github.com/monfresh/laptop/issues/new) for me.
+[new GitHub Issue](https://github.com/ethikz/onboarding-installs/issues/new) for me.
 Or, attach the whole log file as an attachment.
 
 What it sets up
 ---------------
 
 * [Bundler] for managing Ruby gems
-* [chruby] for managing [Ruby] versions
-* [Flux] for adjusting your Mac's display color so you can sleep better
-* [GitHub Desktop] for setting up your SSH keys automatically
-* [Heroku Toolbelt] for deploying and managing Heroku apps
+* [RVM] for managing [Ruby] versions
+* [SourceTree] for a Git UI if needed
 * [Homebrew] for managing operating system libraries
 * [Homebrew Cask] for quickly installing Mac apps from the command line
 * [Homebrew Services] so you can easily stop, start, and restart services
-* [hub] for interacting with the GitHub API
 * [PhantomJS] for headless website testing
 * [Postgres] for storing relational data
 * [ruby-install] for installing different versions of Ruby
-* [Sublime Text 3] for coding all the things
+* [Atom] for coding all the things
 * [Zsh] as your shell (if you opt in)
+* [Zsh Themes]
+* [Dotfiles] things like .zshrc, .vimrc for same configuration across computers
 
 [Bundler]: http://bundler.io/
-[chruby]: https://github.com/postmodern/chruby
-[Flux]: https://justgetflux.com/
-[GitHub Desktop]: https://desktop.github.com/
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
+[RVM]: https://rvm.io/rvm/install
+[Source Tree]: https://www.sourcetreeapp.com/   
 [Homebrew]: http://brew.sh/
 [Homebrew Cask]: http://caskroom.io/
 [Homebrew Services]: https://github.com/Homebrew/homebrew-services
-[hub]: https://github.com/github/hub
 [PhantomJS]: http://phantomjs.org/
 [Postgres]: http://www.postgresql.org/
 [Ruby]: https://www.ruby-lang.org/en/
-[ruby-install]: https://github.com/postmodern/ruby-install
-[Sublime Text 3]: http://www.sublimetext.com/3
+[Atom]: http://www.atom.io
+[Atom config]: https://github.com/ethikz/dotfiles/.atom
 [Zsh]: http://www.zsh.org/
+[Zsh Themes]: https://github.com/ethikz/dotfiles/zsh_themes
+[Dotfiles]: https://github.com/ethikz/dotfiles
 
 It should take less than 15 minutes to install (depends on your machine and
 internet connection).
 
-The script also lightly customizes your shell prompt so that it displays your
-current directory in orange, followed by the current Ruby version or gemset in
-green, and sets the prompt character to `$`. It also allows you to easily
-distinguish directories from files when running `ls` by displaying directories
-in a different color. Below is a screenshot showing what the colors look like
-when using the default Terminal white background, the Solarized Dark theme, and the Solarized Light theme.
-
 ![Terminal screenshots](http://cl.ly/image/19022S0q3H1b/download/Image%202015-05-12%20at%2011.31.04%20PM.png)
-
-If you want to use the [Solarized](http://ethanschoonover.com/solarized)
-themes, run the following commands in your Terminal:
-```bash
-cd ~
-
-curl --remote-name https://raw.githubusercontent.com/tomislav/osx-terminal.app-colors-solarized/master/Solarized%20Dark.terminal
-
-curl --remote-name https://raw.githubusercontent.com/tomislav/osx-terminal.app-colors-solarized/master/Solarized%20Light.terminal
-
-open Solarized%20Dark.terminal
-
-open Solarized%20Light.terminal
-```
-
-This will add the Solarized themes to your Terminal's Profiles, and if you want to set one of them as the default, go to your Terminal's Preferences,
-click on the Settings tab, scroll down to the Solarized Profile, click on it,
-then click the Default button. When you open a new window or tab (or if you quit and relaunch Terminal), it will use the Solarized theme.
 
 If you want to try out different prompt colors other than orange and green,
 open your `.zshrc` or `.bash_profile` in Sublime Text:
 
 ```sh
-subl ~/.zshrc
+atom ~/.zshrc
 ```
 
 Then in the line that starts with `precmd`, replace `{166}` and `{65}` with
@@ -155,12 +128,13 @@ Customize in `~/.laptop.local` and `~/Brewfile.local`
 cd ~
 
 # Download the sample files to your computer
-curl --remote-name https://raw.githubusercontent.com/monfresh/laptop/master/.laptop.local
-curl --remote-name https://raw.githubusercontent.com/monfresh/laptop/master/Brewfile.local
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile.local
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/.laptop.local
 
 # open the files in Sublime Text
-subl .laptop.local
-subl Brewfile.local
+atom .laptop.local
+atom Brewfile.local
 ```
 
 Your `~/.laptop.local` is run at the end of the `mac` script.
@@ -170,13 +144,11 @@ You can use the `.laptop.local` and `Brewfile.local` you downloaded
 above to get started. It lets you install the following tools and Mac apps:
 
 * [Atom] - GitHub's open source text editor
-* [CloudApp] for sharing screenshots and making an animated GIF from a video
 * [Firefox] for testing your Rails app on a browser other than Chrome or Safari
 * [iTerm2] - an awesome replacement for the OS X Terminal
 * [Redis] for storing key-value data
 
 [Atom]: https://atom.io/
-[CloudApp]: http://getcloudapp.com/
 [Firefox]: https://www.mozilla.org/en-US/firefox/new/
 [iTerm2]: http://iterm2.com/
 [Redis]: http://redis.io/

@@ -194,7 +194,7 @@ fi
 sudo chmod -R a+X "/Library"
 sudo chmod -R a+X "$HOME/.rvm/"
 group=groups whoami | cut -d ' ' -f1
-sudo chown -R "$(whoami)[:$(group)]" "/Library/Ruby"
+sudo chown -R "$(whoami):$(group)" "/Library/Ruby"
 
 fancy_echo 'Updating Rubygems...'
 gem update --system

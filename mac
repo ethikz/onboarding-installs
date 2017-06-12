@@ -222,21 +222,20 @@ if [ -f "$HOME/.laptop.local" ]; then
 fi
 
 if [ ! -f "$HOME/.ssh" ]; then
-  for dir in */
-    do
-      mkdir ~/.ssh/
-      
-      cd "$dir" || exit
-        cd ~/.ssh/
-        echo -n "What is your BB&T email?"
-        read -r response
-
-        if [ ! -f "$HOME/.ssh/$response" ]; then
-          ssh-keygen -t rsa -C "$response" -P "" -f "$response"
-        fi
-
-        cd ..
-    done
+  mkdir ~/.ssh/
+  
+  for .ssh in */
+  do
+    cd "$dir" || exit
+    echo -n "What is your BB&T email?"
+    read -r response
+    
+    if [ ! -f "$HOME/.ssh/$response" ]; then
+      ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+    fi
+    
+    cd ..
+  done
 fi
 
 if [ -f "$HOME/.oh-my-zsh" ]; then

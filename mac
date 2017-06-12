@@ -232,7 +232,6 @@ if [ ! -f "$HOME/.ssh" ]; then
   fi
 
   cd .. || exit
-    )
 fi
 
 if [ -f "$HOME/.oh-my-zsh" ]; then

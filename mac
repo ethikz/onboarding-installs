@@ -117,15 +117,6 @@ gem_install_or_update() {
   fi
 }
 
-app_is_installed() {
-  local app_name
-  app_name=$(echo "$1" | cut -d'-' -f1)
-  find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
-  defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname $app_name*.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
-}
-
-killall Dock
-
 
 latest_installed_ruby() {
   find "$HOME/.rvm" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+'

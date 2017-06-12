@@ -222,8 +222,9 @@ if [ -f "$HOME/.laptop.local" ]; then
 fi
 
 if [ ! -f "$HOME/.ssh" ]; then
-  for .ssh in ~/
+for dir in */
   do
+    (
     cd "$dir" || exit
     echo -n "What is your BB&T email?"
     read -r response
@@ -233,6 +234,7 @@ if [ ! -f "$HOME/.ssh" ]; then
     fi
     
     cd ..
+    )
   done
 fi
 

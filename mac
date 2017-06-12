@@ -222,9 +222,7 @@ if [ -f "$HOME/.laptop.local" ]; then
 fi
 
 if [ ! -f "$HOME/.ssh" ]; then
-  mkdir ~/.ssh/
-  
-  for .ssh in */
+  for .ssh in ~/
   do
     cd "$dir" || exit
     echo -n "What is your BB&T email?"

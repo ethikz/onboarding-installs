@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cd ~ || exit
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac

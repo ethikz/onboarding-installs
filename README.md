@@ -83,7 +83,6 @@ What it sets up
 * [Homebrew Services] so you can easily stop, start, and restart services
 * [PhantomJS] for headless website testing
 * [Postgres] for storing relational data
-* [ruby-install] for installing different versions of Ruby
 * [Atom] for coding all the things
 * [Zsh] as your shell (if you opt in)
 * [Zsh Themes] themse for shell

@@ -77,7 +77,7 @@ What it sets up
 
 * [Bundler] for managing Ruby gems
 * [RVM] for managing [Ruby] versions
-* [SourceTree] for a Git UI if needed
+* [Source Tree] for a Git UI if needed
 * [Homebrew] for managing operating system libraries
 * [Homebrew Cask] for quickly installing Mac apps from the command line
 * [Homebrew Services] so you can easily stop, start, and restart services
@@ -93,8 +93,6 @@ What it sets up
 * [Google Chrome] browser
 * [Citrix Receiver]
 * [Adobe Creative Cloud]
-* [Android Platform Tools]
-* [Android SDK]
 * [Android Studio]
 
 [Bundler]: http://bundler.io/

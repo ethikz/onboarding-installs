@@ -121,8 +121,7 @@ app_is_installed() {
   local app_name
   app_name=$(echo "$1" | cut -d'-' -f1)
   find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
-  defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname "$app_name*".app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
+  defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname $app_name*.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 }
 
 killall Dock
@@ -227,7 +226,7 @@ if [ ! -f "$HOME/.ssh" ]; then
   mkdir ~/.ssh/
   cd ~/.ssh/
   echo -n "What is your BB&T email?"
-  read response
+  read -r response
   
   if [ ! -f "$HOME/.ssh/$response" ]; then
     ssh-keygen -t rsa -C "$response" -P "" -f $response
@@ -237,13 +236,13 @@ if [ ! -f "$HOME/.ssh" ]; then
 fi
 
 if [ -f "$HOME/.oh-my-zsh" ]; then
-   cd ~/.oh-my-zsh
+   cd "$HOME/.oh-my-zsh"
    wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
 elif [ ! -f "$HOME/.oh-my-zsh" ]; then
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
    exit
    chsh -s "$(which zsh)"
-   source ~/.zshrc
+   source "$HOME/.zshrc"
    cd ..
 fi
 

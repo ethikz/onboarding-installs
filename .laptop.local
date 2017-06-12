@@ -37,7 +37,7 @@ if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
   cd ~/.atom || exit
   curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
   chmod +x "$HOME/.atom/atom_packages.txt"
-  apm install --packages-file my_atom_packages.txt
+  apm install --packages-file atom_packages.txt
   cd .. || exit
 fi
 

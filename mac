@@ -216,37 +216,34 @@ no_zsh_frameworks() {
 
 if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck source=/dev/null
-  cd ~/
+  cd ~/ || exit
   chmod +x .laptop.local
   ./.laptop.local
 fi
 
 if [ ! -f "$HOME/.ssh" ]; then
-for dir in ~/*
-  do
-    (
-    cd "$dir" || exit
-    echo -n "What is your BB&T email?"
-    read -r response
-    
-    if [ ! -f "$HOME/.ssh/$response" ]; then
-      ssh-keygen -t rsa -C "$response" -P "" -f "$response"
-    fi
-    
-    cd ..
+  mkdir ~/.ssh
+  cd ~/.ssh || exit
+  echo -n "What is your BB&T email?"
+  read -r response
+
+  if [ ! -f "$HOME/.ssh/$response" ]; then
+    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+  fi
+
+  cd .. || exit
     )
-  done
 fi
 
 if [ -f "$HOME/.oh-my-zsh" ]; then
-   cd "$HOME/.oh-my-zsh"
+   cd "$HOME/.oh-my-zsh" || exit
    wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
 elif [ ! -f "$HOME/.oh-my-zsh" ]; then
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
    exit
    chsh -s "$(which zsh)"
    shell_file="$HOME/.zshrc"
-   cd ..
+   cd .. || exit
 fi
 
 fancy_echo 'All done!'

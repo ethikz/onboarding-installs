@@ -46,6 +46,7 @@ change_shell_to_zsh() {
   chsh -s "$(which zsh)"
 
   # shellcheck source=~/.zshrc
+  
   source "$HOME/.zshrc"
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
@@ -227,16 +228,21 @@ if [ -f "$HOME/.laptop.local" ]; then
 fi
 
 if [ ! -f "$HOME/.ssh" ]; then
-  mkdir ~/.ssh/
-  cd ~/.ssh/
-  echo -n "What is your BB&T email?"
-  read -r response
-  
-  if [ ! -f "$HOME/.ssh/$response" ]; then
-    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
-  fi
-  
-  cd ..
+  for dir in */
+    do
+      mkdir ~/.ssh/
+      
+      cd "$dir" || exit
+        cd ~/.ssh/
+        echo -n "What is your BB&T email?"
+        read -r response
+
+        if [ ! -f "$HOME/.ssh/$response" ]; then
+          ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+        fi
+
+        cd ..
+    done
 fi
 
 if [ -f "$HOME/.oh-my-zsh" ]; then

@@ -179,7 +179,10 @@ if hash rvm &> /dev/null; then
 else
   echo "Installing RVM..."
   curl -sSL https://get.rvm.io | bash -s stable --ruby
-  shell_file="$HOME/.rvm/scripts/rvm"
+  
+  # shellcheck source=/dev/null
+  source "$HOME/.rvm/scripts/rvm"
+  
   rvm requirements
 
   append_to_file "$shell_file" "rvm use ruby-$(latest_installed_ruby)"

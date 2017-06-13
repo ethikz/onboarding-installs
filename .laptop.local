@@ -24,8 +24,8 @@ while read -r app; do
     [[ "$app" =~ ^'brew'.*$ ]] && continue
     echo "${app}"
     cask "$app"
-    defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname $app*.app</string><key>_CFURLStringType</key><integer>'$number'</integer></dict></dict></dict>"
-    $number++
+    defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname $app*.app</string><key>_CFURLStringType</key><integer>$number</integer></dict></dict></dict>"
+    number="$number++"
 done < "$file"
 
 killall Dock

@@ -19,13 +19,13 @@ if [ -f "$HOME/Brewfile.local" ]; then
 fi
 
 file="$HOME/Brewfile"
-number=0
 while read -r app; do
+    number=0
     [[ "$app" =~ ^'brew'.*$ ]] && continue
     echo "${app}"
     cask "$app"
     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname $app*.app</string><key>_CFURLStringType</key><integer>$number</integer></dict></dict></dict>"
-    number="$number++"
+    $number++
 done < "$file"
 
 killall Dock

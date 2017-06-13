@@ -217,7 +217,7 @@ if [ -f "$HOME/.laptop.local" ]; then
   ./.laptop.local
 fi
 
-if [ ! -f "$HOME/.ssh" ]; then
+if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
   echo -n "What is your BB&T email?"
@@ -230,10 +230,10 @@ if [ ! -f "$HOME/.ssh" ]; then
   cd .. || exit
 fi
 
-if [ -f "$HOME/.oh-my-zsh" ]; then
+if [ -d "$HOME/.oh-my-zsh" ]; then
    cd "$HOME/.oh-my-zsh" || exit
    wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
-elif [ ! -f "$HOME/.oh-my-zsh" ]; then
+elif [ ! -d "$HOME/.oh-my-zsh" ]; then
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
    exit
    chsh -s "$(which zsh)"

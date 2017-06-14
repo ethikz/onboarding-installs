@@ -18,21 +18,27 @@ if [ -f "$HOME/Brewfile.local" ]; then
 
 fi
 
+if [ ! -f "/Applications/Xcode.app" ]; then
+  mas search Xcode
+  read line
+  line=$(grep -oEe '[0-9]+');
+  
+  if [ $line ]; then
+    echo 'Here is the first line ' $line
+  fi
+else
+  xcode-select --install
+fi
+
 file="$HOME/Brewfile"
-number=0
 while read -r app; do
 
      [[ "$app" =~ ^'cask_args'.*$ || "$app" =~ ^'tap'.*$ || "$app" =~ ^'brew'.*$ ]] && continue
-
-     # echo "${app}"
 
      cask "$app"
 
      echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p "
      defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/ -iname $(echo ${app} | sed -n ' s,[^']*'\([^']*\).*,\1,p ')*.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
-
-     # $number++
-
  done < "$file"
 
 killall Dock

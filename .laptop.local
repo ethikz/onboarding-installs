@@ -29,7 +29,7 @@ while read -r app; do
      cask "$app"
 
      echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p "
-     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname echo "${app}" | sed -n ' s,[^']*'\([^']*\).*,\1,p '*.app</string><key>_CFURLStringType</key><integer>$number</integer></dict></dict></dict>"
+     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications -iname $(echo "${app}" | sed -n ' s,[^']*'\([^']*\).*,\1,p ')*.app</string><key>_CFURLStringType</key></dict></dict></dict>"
 
      # $number++
 

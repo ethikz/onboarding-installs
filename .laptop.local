@@ -29,7 +29,7 @@ while read -r app; do
 
      echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p "
      
-     if [ [ ! "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " =~ ^(java|alfred|android-platform-tools|android-sdk)$ ] ]
+     if [ ! [ "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " =~ ^(java|alfred|android-platform-tools|android-sdk)$ ] ]
       echo "${app}"
       defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/ -iname $(echo "${app}" | sed -n ' s,[^']*'\([^']*\).*,\1,p ')*.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
      fi

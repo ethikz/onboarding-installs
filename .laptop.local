@@ -61,7 +61,5 @@ if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
   cd .. || exit
 fi
 
-xcode-select --install
-
 exit
 chsh -s "$(which zsh)"

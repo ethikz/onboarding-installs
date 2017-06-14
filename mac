@@ -188,7 +188,6 @@ fi
 
 sudo chmod -R a+X "/Library"
 sudo chmod -R a+X "$HOME/.rvm/"
-echo "$(id -u):$(id -g)"
 sudo chown -R "$(id -u):$(id -g)" "/Library/Ruby"
 
 fancy_echo 'Updating Rubygems...'

@@ -43,9 +43,6 @@ change_shell_to_zsh() {
   echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
   
-  # shellcheck source=/dev/null
-  source "$HOME/.zshrc"
-  
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
 }

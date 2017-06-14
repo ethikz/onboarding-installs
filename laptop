@@ -2,13 +2,6 @@
 
 cd ~ || exit
 
-if [ ! -f "/Applications/Xcode.app" ]; then
-  exit
-else
-  xcode-select --install
-fi
-
-
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/.laptop.local

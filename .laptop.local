@@ -19,13 +19,8 @@ if [ -f "$HOME/Brewfile.local" ]; then
 fi
 
 if [ ! -f "/Applications/Xcode.app" ]; then
-  mas search Xcode
-  read line
-  line=$(grep -oEe '[0-9]+');
-  
-  if [ $line ]; then
-    echo 'Here is the first line ' $line
-  fi
+  xcodeId="mas search Xcode | head -1 | grep -oEe '[0-9]+'"
+  mas install "${xcodeId}"
 else
   xcode-select --install
 fi

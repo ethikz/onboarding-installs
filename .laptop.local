@@ -56,7 +56,7 @@ if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
 fi
 
 if [ ! -f "/Applications/Xcode.app" ]; then
-  xcodeId="$(mas search Xcode | head -1 | grep -oEe \'[0-9]+\')"
+  xcodeId="$(mas search Xcode | head -1 | grep -oEe '[0-9]+')"
   mas install "$xcodeId"
 else
   xcode-select --install

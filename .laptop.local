@@ -18,13 +18,6 @@ if [ -f "$HOME/Brewfile.local" ]; then
 
 fi
 
-if [ ! -f "/Applications/Xcode.app" ]; then
-  xcodeId="$(mas search Xcode | head -1 | grep -oEe '[0-9]+')"
-  mas install "$xcodeId"
-else
-  xcode-select --install
-fi
-
 file="$HOME/Brewfile"
 while read -r app; do
 
@@ -60,6 +53,13 @@ if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
   chmod +x "$HOME/.atom/atom_packages.txt"
   apm install --packages-file atom_packages.txt
   cd .. || exit
+fi
+
+if [ ! -f "/Applications/Xcode.app" ]; then
+  xcodeId="$(mas search Xcode | head -1 | grep -oEe '[0-9]+')"
+  mas install "$xcodeId"
+else
+  xcode-select --install
 fi
 
 exit

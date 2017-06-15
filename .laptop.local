@@ -30,7 +30,7 @@ while read -r app; do
      newApp=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p ")
      
      echo "${newApp}"
-     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/${newApp}.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$("${newApp}").app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 done < "$file"
 
 killall Dock

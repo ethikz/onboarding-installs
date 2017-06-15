@@ -21,9 +21,13 @@ if [ ! -d "$HOME/.ssh" ]; then
   if [ ! -f "$HOME/.ssh/$response" ]; then
     ssh-keygen -t rsa -C "$response" -P "" -f "$response"
   fi
+  
+  cat ~/.ssh/"${response}" | pbcopy
 
   cd .. || exit
 fi
+
+fancy_echo "\nCopyied public key to clipboard, please add it to your Github account."
 
 
 if [ -d "$HOME/.oh-my-zsh" ]; then
@@ -63,11 +67,11 @@ if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
   cd .. || exit
 fi
 
-if [ ! -f "/Applications/Xcode.app" ]; then
-  xcodeId="$(mas search Xcode | head -1 | grep -oEe '[0-9]+')"
-  mas install "$xcodeId"
-else
-  xcode-select --install
-fi
+#if [ ! -f "/Applications/Xcode.app" ]; then
+#  xcodeId="$(mas search Xcode | head -1 | grep -oEe '[0-9]+')"
+#  mas install "$xcodeId"
+#else
+#  xcode-select --install
+#fi
 
 exit

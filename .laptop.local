@@ -22,7 +22,7 @@ if [ ! -d "$HOME/.ssh" ]; then
     ssh-keygen -t rsa -C "$response" -P "" -f "$response"
   fi
   
-  cat ~/.ssh/"${response}" | pbcopy
+  pbcopy < "$HOME/.ssh/${response}"
 
   cd .. || exit
 fi

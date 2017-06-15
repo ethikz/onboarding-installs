@@ -5,7 +5,7 @@ brew 'git'
 tap 'homebrew/services'
 tap 'homebrew/bundle'
 
-brew 'argon/mas/mas'
+brew 'mas'
 brew 'postgresql'
 brew 'phantomjs'
 brew 'gist'

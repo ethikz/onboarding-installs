@@ -33,14 +33,14 @@ fancy_echo "\nCopyied public key to clipboard, please add it to your Github acco
 if [ -d "$HOME/.oh-my-zsh" ]; then
    cd "$HOME/.oh-my-zsh" || exit
    wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
-elif [ ! -d "$HOME/.oh-my-zsh" ]; then
-   change_shell_to_zsh
-   chsh -s "$(which zsh)"
+#elif [ ! -d "$HOME/.oh-my-zsh" ]; then
+   #change_shell_to_zsh
+   #chsh -s "$(which zsh)"
    
    # shellcheck source=/dev/null
-   source "$HOME/.zshrc"
+   #source "$HOME/.zshrc"
    
-   cd .. || exit
+   #cd .. || exit
 fi
 
 if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then

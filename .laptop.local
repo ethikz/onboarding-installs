@@ -22,8 +22,6 @@ file="$HOME/Brewfile"
 while read -r app; do
 
      [[ "$app" =~ ^'cask_args'.*$ || "$app" =~ ^'tap'.*$ || "$app" =~ ^'brew'.*$ ]] && continue
-     
-     cask "$app"
 
      newApp=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " | sed -e 's/-/\ /g' | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
      

@@ -25,6 +25,7 @@ if [ ! -d "$HOME/.ssh" ]; then
   cd .. || exit
 fi
 
+
 if [ -d "$HOME/.oh-my-zsh" ]; then
    cd "$HOME/.oh-my-zsh" || exit
    wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
@@ -54,11 +55,10 @@ if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
 fi
 
 if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
-  mkdir ~/.atom
-  cd ~/.atom || exit
+  npm install -g atom-package-manager
+  mkdir ~/.atom && cd ~/.atom || exit
   curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
   chmod +x "$HOME/.atom/atom_packages.txt"
-  open -a Atom
   apm install --packages-file atom_packages.txt
   cd .. || exit
 fi

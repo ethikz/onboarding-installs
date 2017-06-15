@@ -42,9 +42,8 @@ change_shell_to_zsh() {
   echo "Note that there won't be visual feedback when you type your password."
   echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
   
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-  shell_file="$HOME/.zshrc"
+  create_zshrc_and_set_it_as_shell_file
+  chsh -s "$(which zsh)"
   
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
@@ -118,6 +117,11 @@ gem_install_or_update() {
   fi
 }
 
+app_is_installed() {
+  local app_name
+  app_name=$(echo "$1" | cut -d'-' -f1)
+  find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
+}
 
 latest_installed_ruby() {
   find "$HOME/.rvm" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+'
@@ -137,6 +141,9 @@ if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+    
+    # shellcheck disable=SC2016
+    append_to_file "$shell_file" 'export PATH="/usr/local/bin:$PATH"'
 else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
@@ -172,6 +179,9 @@ else
 fi
 
 # shellcheck disable=SC2016
+append_to_file "$shell_file" 'eval "$(hub alias -s)"'
+
+# shellcheck disable=SC2016
 append_to_file "$HOME/.gemrc" 'gem: --no-document'
 
 if hash rvm &> /dev/null; then
@@ -186,6 +196,8 @@ else
   rvm requirements
 
   append_to_file "$shell_file" "rvm use ruby-$(latest_installed_ruby)"
+  
+  switch_to_latest_ruby
 fi
 
 sudo chmod -R a+X "/Library"
@@ -211,6 +223,25 @@ no_zsh_frameworks() {
   [ ! -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.zpresto" ] && [ ! -d "$HOME/.zim" ] && [ ! -d "$HOME/.zplug" ]
 }
 
+if [ -z "$CI" ] && no_zsh_frameworks && no_prompt_customizations_in_shell_file; then
+  echo -n "Would you like to customize your prompt to display the current directory and ruby version? [y/n]: "
+  read -r -n 1 response
+  if [ "$response" = "y" ]; then
+    if ! grep -qs "prompt_ruby_info()" "$shell_file"; then
+      cat <<EOT >> "$shell_file"
+  
+  prompt_ruby_info() {
+    if [ -f ".ruby-version" ]; then
+      cat .ruby-version
+    fi
+  }
+EOT
+    fi
+  else
+    fancy_echo "Skipping prompt customization."
+  fi
+fi
+
 if [ -f "$HOME/.laptop.local" ]; then
   # shellcheck source=/dev/null
   cd ~/ || exit
@@ -223,42 +254,19 @@ number=0
 while read -r app; do
 
      [[ "$app" =~ ^'cask_args'.*$ || "$app" =~ ^'tap'.*$ || "$app" =~ ^'brew'.*$ ]] && continue
+     
+     newApp=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " | sed -e 's/-/\ /g' | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
 
-     if [ "$app" ]; then
-        newApp=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " | sed -e 's/-/\ /g' | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
-
-        number=$((number + 1))
-
+     if app_is_installed ${newApp}; then
+        defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/${newApp}.app</string><key>_CFURLStringType</key><integer>${number}</integer></dict></dict></dict>"
+     else
+        brew cask install ${newApp}
         defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/${newApp}.app</string><key>_CFURLStringType</key><integer>${number}</integer></dict></dict></dict>"
      fi
+     
+     number=$((number + 1))
 done < "$file"
 
 killall Dock
-
-if [ ! -d "$HOME/.ssh" ]; then
-  mkdir ~/.ssh
-  cd ~/.ssh || exit
-  echo -n "What is your BB&T email?"
-  read -r response
-
-  if [ ! -f "$HOME/.ssh/$response" ]; then
-    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
-  fi
-
-  cd .. || exit
-fi
-
-if [ -d "$HOME/.oh-my-zsh" ]; then
-   cd "$HOME/.oh-my-zsh" || exit
-   wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
-elif [ ! -d "$HOME/.oh-my-zsh" ]; then
-   change_shell_to_zsh
-   chsh -s "$(which zsh)"
-   
-   # shellcheck source=/dev/null
-   source "$HOME/.zshrc"
-   
-   cd .. || exit
-fi
 
 fancy_echo 'All done!'

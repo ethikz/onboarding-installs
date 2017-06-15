@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 fancy_echo() {
   local fmt="$1"; shift                                                               
@@ -8,6 +8,32 @@ fancy_echo() {
 } 
 
 fancy_echo "Running your customizations from ~/.laptop.local ..."
+
+if [ ! -d "$HOME/.ssh" ]; then
+  mkdir ~/.ssh
+  cd ~/.ssh || exit
+  echo -n "What is your BB&T email?"
+  read -r response
+
+  if [ ! -f "$HOME/.ssh/$response" ]; then
+    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+  fi
+
+  cd .. || exit
+fi
+
+if [ -d "$HOME/.oh-my-zsh" ]; then
+   cd "$HOME/.oh-my-zsh" || exit
+   wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
+elif [ ! -d "$HOME/.oh-my-zsh" ]; then
+   change_shell_to_zsh
+   chsh -s "$(which zsh)"
+   
+   # shellcheck source=/dev/null
+   source "$HOME/.zshrc"
+   
+   cd .. || exit
+fi
 
 if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
   cd ~ || exit

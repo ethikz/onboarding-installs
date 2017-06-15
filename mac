@@ -211,6 +211,13 @@ no_zsh_frameworks() {
   [ ! -d "$HOME/.oh-my-zsh" ] && [ ! -d "$HOME/.zpresto" ] && [ ! -d "$HOME/.zim" ] && [ ! -d "$HOME/.zplug" ]
 }
 
+if [ -f "$HOME/.laptop.local" ]; then
+  # shellcheck source=/dev/null
+  cd ~/ || exit
+  chmod +x .laptop.local
+  ./.laptop.local
+fi
+
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
@@ -235,13 +242,6 @@ elif [ ! -d "$HOME/.oh-my-zsh" ]; then
    source "$HOME/.zshrc"
    
    cd .. || exit
-fi
-
-if [ -f "$HOME/.laptop.local" ]; then
-  # shellcheck source=/dev/null
-  cd ~/ || exit
-  chmod +x .laptop.local
-  ./.laptop.local
 fi
 
 fancy_echo 'All done!'

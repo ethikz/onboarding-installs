@@ -20,9 +20,8 @@ if [ ! -d "$HOME/.ssh" ]; then
 
   if [ ! -f "$HOME/.ssh/$response" ]; then
     ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+    pbcopy < "$HOME/.ssh/$response"
   fi
-  
-  pbcopy < "$HOME/.ssh/${response}"
 
   cd .. || exit
 fi
@@ -31,7 +30,6 @@ fancy_echo "\nCopyied public key to clipboard, please add it to your Github acco
 
 
 if [ -d "$HOME/.oh-my-zsh" ]; then
-   cd "$HOME/.oh-my-zsh" || exit
    wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
 #elif [ ! -d "$HOME/.oh-my-zsh" ]; then
    #change_shell_to_zsh
@@ -53,13 +51,12 @@ if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
 fi
 
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
-  cd "$HOME/.vim/bundle" || exit
+  mkdir "$HOME/.vim/bundle/Vundle.vim"
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 fi
 
 if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
-  npm install -g atom-package-manager
   mkdir ~/.atom && cd ~/.atom || exit
   curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
   chmod +x "$HOME/.atom/atom_packages.txt"

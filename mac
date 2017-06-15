@@ -4,6 +4,13 @@
 # Be prepared to turn your laptop (or desktop)
 # into an awesome development machine.
 
+xcode-select -p > /dev/null 2>&1
+
+if [ $? -ne 0 ]
+then
+    xcode-select --install
+fi
+
 fancy_echo() {
   local fmt="$1"; shift                                                               
   
@@ -69,13 +76,6 @@ upgrade_newest_npm() {
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
-
-xcode-select -p > /dev/null 2>&1
-
-if [ $? -ne 0 ]
-then
-    xcode-select --install
-fi
 
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"

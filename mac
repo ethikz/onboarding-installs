@@ -22,7 +22,6 @@ append_to_file() {
 
 create_zshrc_and_set_it_as_shell_file() {
   if [ ! -f "$HOME/.zshrc" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.zshrc
     curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.vimrc
   fi
@@ -42,6 +41,7 @@ change_shell_to_zsh() {
   fancy_echo "Please enter your password to continue."
   echo "Note that there won't be visual feedback when you type your password."
   echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
   
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."

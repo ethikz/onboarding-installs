@@ -27,10 +27,10 @@ while read -r app; do
      
      cask "$app"
 
-     echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p "
+     newApp=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p ")
      
-     echo "${app}"
-     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/ -iname $(echo "${app}" | sed -n ' s,[^']*'\([^']*\).*,\1,p ')*.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+     echo "${newApp}"
+     defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/ -iname $newApp*.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 done < "$file"
 
 killall Dock

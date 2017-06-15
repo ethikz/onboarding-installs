@@ -1,6 +1,7 @@
 #!/bin/sh
 
 fancy_echo() {
+  # shellcheck disable=SC2039
   local fmt="$1"; shift                                                               
   
   # shellcheck disable=SC2059
@@ -12,6 +13,8 @@ fancy_echo "Running your customizations from ~/.laptop.local ..."
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
+  
+  # shellcheck disable=SC2039
   echo -n "What is your BB&T email?"
   read -r response
 
@@ -45,7 +48,7 @@ if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
 fi
 
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
-  cd $HOME/.vim/bundle || exit
+  cd "$HOME/.vim/bundle" || exit
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 fi

@@ -12,8 +12,20 @@ fancy_echo() {
 } 
 
 append_to_file() {
+  # shellcheck disable=SC2039
   local file="$1"
+  # shellcheck disable=SC2039
   local text="$2"
+
+  if [ "$file" = "$HOME/.zshrc" ]; then
+    if [ -w "$HOME/.zshrc.local" ]; then
+      file="$HOME/.zshrc.local"
+    else
+      file="$HOME/.zshrc"
+    fi
+  elif [ "$file" = "$HOME/.bash_profile" ]; then
+    file="$HOME/.bash_profile"
+  fi
 
   if ! grep -qs "^$text$" "$file"; then
     printf "\n%s\n" "$text" >> "$file"
@@ -49,10 +61,21 @@ change_shell_to_zsh() {
   echo "The instructions for changing shells manually are available in the README."
 }
 
+upgrade_newest_npm() {
+  npm install -g npm@latest
+}
+
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
+
+xcode-select -p > /dev/null 2>&1
+
+if [ $? -ne 0 ]
+then
+    xcode-select --install
+fi
 
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
@@ -181,8 +204,34 @@ fi
 # shellcheck disable=SC2016
 append_to_file "$shell_file" 'eval "$(hub alias -s)"'
 
+
+fancy_echo 'Checking on Node.js installation...'
+
+if ! brew_is_installed "node"; then
+  if command -v n > /dev/null; then
+    fancy_echo "We recommend using \`nvm\` and not \`n\`."
+  elif ! command -v nvm > /dev/null; then
+    fancy_echo 'Installing nvm and lts Node.js and npm...'
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+    export NVM_DIR="$HOME/.nvm"
+    # shellcheck source=/dev/null
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm install node --lts
+  else
+    fancy_echo 'version manager detected.  Skipping...'
+  fi
+else
+  brew bundle --file=- <<EOF
+  brew 'node'
+EOF
+fi
+
+fancy_echo '...Finished Node.js installation checks.'
+
 # shellcheck disable=SC2016
 append_to_file "$HOME/.gemrc" 'gem: --no-document'
+
+fancy_echo 'Checking on Ruby installation...'
 
 if hash rvm &> /dev/null; then
   echo "RVM already installed"
@@ -214,6 +263,8 @@ number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo '...Finished Ruby installation checks.'
+
+upgrade_newest_npm
 
 no_prompt_customizations_in_shell_file() {
   ! grep -qs -e "PS1=" -e "precmd" -e "PROMPT=" "$shell_file"

@@ -79,7 +79,7 @@ install_npm_packages() {
   
     # set to 0 if not found
     # shellcheck disable=SC2010
-    ls node_modules | grep "$package" >/dev/null 2>&1 || {
+    ls node_modules | grep -w "$package" >/dev/null 2>&1 || {
       # shellcheck disable=SC2034
       local return_=0;
       npm install -g "$package"

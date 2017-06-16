@@ -211,7 +211,7 @@ How to switch your shell back to bash from zsh (or vice versa)
    For example, if `which bash` returned `/bin/bash`, you would run `chsh -s /bin/bash`.
 
    If the location of the shell is not in `/etc/shells`, add it, then run the `chsh` command.
-   If you have Sublime Text, you can open the file by running `subl /etc/shells`.
+   If you have Sublime Text, you can open the file by running `atom /etc/shells`.
 
 Credits
 -------

@@ -7,14 +7,14 @@
 echo -n "Do you have Xcode already installed? [y/N]"
 read -r -n 1 response
 
-if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
+if [[ "$response" = "y" || "$response" = "Y" ]]; then
     xcode-select -p > /dev/null 2>&1
     
     if [ $? -ne 0 ]
     then
         xcode-select --install
     fi
-elif [ "$response" = "n" ] || [ "$response" = "N" ]; then
+elif [[ "$response" = "n" || "$response" = "N" ]]; then
     echo -n "Install Xcode first.  Once finished press the ${bold}Enter${normal} key to continue."
     read -p "Press enter to continue"
 fi

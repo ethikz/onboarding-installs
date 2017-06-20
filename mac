@@ -85,7 +85,7 @@ upgrade_newest_npm() {
 }
 
 install_npm_packages() {
-  file="$HOME/package.json"
+  file="$PWD/package.json"
   while read -r package; do
     local return_=1
   

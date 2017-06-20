@@ -331,6 +331,13 @@ if [ -f "$HOME/.laptop.local" ] || [ -f "$HOME/send-message" ]; then
 fi
 
 
+if [ -f "/Applications/SizeUp.app" ]; then
+   cd ~/Downloads || exit
+   curl -O 70.63.134.210/Design\ Assets/Software/Licenses/SizeUp.sizeuplicense
+   open ~/Downloads/SizeUp.sizeuplicense 
+fi
+
+
 file="$HOME/Brewfile"
 number=0
 while read -r app; do

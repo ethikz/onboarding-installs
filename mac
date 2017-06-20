@@ -245,7 +245,7 @@ upgrade_newest_npm
 
 file="$HOME/npm-packages"
 while read -r app; do
-  [ "$app" =~ ^'#'.*$ ] && continue
+  #[ "$app" =~ ^'#'.*$ ] && continue
   echo "$app"
 
   #npm install -g "$app"

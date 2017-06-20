@@ -10,6 +10,18 @@ fancy_echo() {
 
 fancy_echo "Running your customizations from ~/.laptop.local ..."
 
+
+if [ ! -d "~/bin_compciv/jq" ]; then
+  # shellcheck source=/dev/null
+  cd ~/ || exit
+
+  mkdir ~/bin_compciv
+  curl http://stedolan.github.io/jq/download/linux64/jq -o ~/bin_compciv/jq
+  chmod a+x ~/bin_compciv/jq
+  echo 'export PATH="$HOME/bin_compciv:$PATH"' >> "$shell_file"
+fi
+
+
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
@@ -26,7 +38,6 @@ if [ ! -d "$HOME/.ssh" ]; then
   cd .. || exit
 fi
 
-fancy_echo "\nCopyied public key to clipboard, please add it to your Github account."
 
 
 if [ -d "$HOME/.oh-my-zsh" ]; then

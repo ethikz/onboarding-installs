@@ -1,0 +1,19 @@
+#!/bin/bash
+
+TOKEN="ODM4NzUzZjAxNDk3YTc4NWIwMjkyOGFkM2FjOTQ2MjE="
+API_URL="https://${TOKEN}@api.flowdock.com/users"
+#API_URL="https://ODM4NzUzZjAxNDk3YTc4NWIwMjkyOGFkM2FjOTQ2MjE=@api.flowdock.com/private/${User}/messages"
+
+URL=$(curl -i -s \
+-H "Accept: application/json" \
+-H "Content-Type:application/json" \
+-H "Authorization: Basic ${TOKEN}" \
+"${API_URL}") 
+
+echo "${URL}" | jq '.[] | select(.email=="jchristensen@bbandt.com") | .'
+    
+
+#curl -X POST -H "Content-Type: application/json" \
+#    --data "{ \"event\": \"message\", \"content\": \"This is my pub key for git\" }" \
+#    ${API_URL}
+

@@ -6,6 +6,7 @@ tap 'homebrew/services'
 tap 'homebrew/bundle'
 
 brew 'mas'
+brew 'jq'
 brew 'postgresql'
 brew 'phantomjs'
 brew 'gist'

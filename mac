@@ -245,10 +245,9 @@ upgrade_newest_npm
 
 file="$HOME/npm-packages"
 while read -r app; do
-  #[ "$app" =~ ^'#'.*$ ] && continue
-  echo "$app"
+  [ "$app" =~ ^'#'*$ ] && continue
 
-  #npm install -g "$app"
+  npm install -g "$app"
 done < "$file"
 
 fancy_echo '...Finished Node.js installation checks.'

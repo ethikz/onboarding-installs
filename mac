@@ -87,16 +87,6 @@ upgrade_newest_npm() {
   npm install -g npm@latest
 }
 
-install_npm_packages() {
-  file="$HOME/npm-packages"
-  while read -r package; do
-    [ "$package" =~ ^'#'.*$ ] && continue
-     echo "$package"
-  
-     #npm install -g "$package"
-  done < "$file"
-}
-
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
@@ -252,7 +242,14 @@ EOF
 fi
 
 upgrade_newest_npm
-install_npm_packages
+
+file="$HOME/npm-packages"
+while read -r app; do
+  [ "$app" =~ ^'#'.*$ ] && continue
+  echo "$app"
+
+  #npm install -g "$app"
+done < "$file"
 
 fancy_echo '...Finished Node.js installation checks.'
 

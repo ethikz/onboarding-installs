@@ -94,7 +94,6 @@ install_npm_packages() {
      echo "$package"
   
      #npm install -g "$package"
-    }
   done < "$file"
 }
 

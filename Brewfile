@@ -7,6 +7,7 @@ tap 'homebrew/bundle'
 
 brew 'mas'
 brew 'jq'
+brew 'xclip'
 brew 'postgresql'
 brew 'phantomjs'
 brew 'gist'

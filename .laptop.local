@@ -1,13 +1,5 @@
 #!/bin/sh
 
-fancy_echo() {
-  # shellcheck disable=SC2039
-  local fmt="$1"; shift                                                               
-  
-  # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
-} 
-
 fancy_echo "Running your customizations from ~/.laptop.local ..."
 
 
@@ -19,6 +11,7 @@ if [ ! -d "~/bin_compciv/jq" ]; then
   curl http://stedolan.github.io/jq/download/linux64/jq -o ~/bin_compciv/jq
   chmod a+x ~/bin_compciv/jq
   echo 'export PATH="$HOME/bin_compciv:$PATH"' >> "$shell_file"
+  source "${shell_file}"
 fi
 
 
@@ -32,12 +25,14 @@ if [ ! -d "$HOME/.ssh" ]; then
 
   if [ ! -f "$HOME/.ssh/$response" ]; then
     ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+    
     pbcopy < "$HOME/.ssh/$response"
+    pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
+    export pubkey
   fi
 
   cd .. || exit
 fi
-
 
 
 if [ -d "$HOME/.oh-my-zsh" ]; then

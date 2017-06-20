@@ -4,15 +4,6 @@
 # Be prepared to turn your laptop (or desktop)
 # into an awesome development machine.
 
-if [ ! -d "~/bin_compciv/jq" ]; then
-  # shellcheck source=/dev/null
-  cd ~/ || exit
-  
-  mkdir ~/bin_compciv
-  curl https://github.com/stedolan/jq/releases/download/jq-1.5/jq-osx-amd64 -o ~/bin_compciv/jq
-  chmod a+x ~/bin_compciv/jq
-fi
-
 
 echo "Do you have Xcode already installed? [y/N]"
 read -r -n 1 response
@@ -38,7 +29,8 @@ fancy_echo() {
   
   # shellcheck disable=SC2059
   printf "\n$fmt\n" "$@"
-} 
+}
+export -f fancy_echo 
 
 append_to_file() {
   # shellcheck disable=SC2039
@@ -60,6 +52,7 @@ append_to_file() {
     printf "\n%s\n" "$text" >> "$file"
   fi
 }
+export -f append_to_file
 
 create_zshrc_and_set_it_as_shell_file() {
   if [ ! -f "$HOME/.zshrc" ]; then
@@ -95,7 +88,7 @@ upgrade_newest_npm() {
 }
 
 install_npm_packages() {
-  file="$PWD/package.json"
+  file="$HOME/package.json"
   while read -r package; do
     local return_=1
   
@@ -333,12 +326,21 @@ EOT
   fi
 fi
 
-if [ -f "$HOME/.laptop.local" ]; then
+if [[ -f "$HOME/.laptop.local" || "$HOME/send-message" ]]; then
   # shellcheck source=/dev/null
   cd ~/ || exit
-  chmod +x .laptop.local
-  ./.laptop.local
+
+  if [ -f "$HOME/.laptop.local"]; then
+    chmod +x .laptop.local
+    ./.laptop.local
+  fi
+  
+  if [ -f "$HOME/send-message" ]; then
+    chmod +x send-message
+    ./send-message
+  fi
 fi
+
 
 file="$HOME/Brewfile"
 number=0

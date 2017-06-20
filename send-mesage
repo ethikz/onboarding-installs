@@ -4,6 +4,8 @@ TOKEN="ODM4NzUzZjAxNDk3YTc4NWIwMjkyOGFkM2FjOTQ2MjE="
 API_URL="https://${TOKEN}@api.flowdock.com/users"
 #API_URL="https://ODM4NzUzZjAxNDk3YTc4NWIwMjkyOGFkM2FjOTQ2MjE=@api.flowdock.com/private/${User}/messages"
 
+#$pubkey
+
 URL=$(curl -i -s \
 -H "Accept: application/json" \
 -H "Content-Type:application/json" \

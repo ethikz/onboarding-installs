@@ -326,7 +326,7 @@ EOT
   fi
 fi
 
-if [ -f "$HOME/.laptop.local"] || [ -f "$HOME/send-message" ]; then
+if [ -f "$HOME/.laptop.local" ] || [ -f "$HOME/send-message" ]; then
   # shellcheck source=/dev/null
   cd ~/ || exit
 

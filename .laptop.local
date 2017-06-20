@@ -12,6 +12,7 @@ if [ ! -d "$HOME/bin_compciv/jq" ]; then
   chmod a+x ~/bin_compciv/jq
   
   # shellcheck disable=SC2016
+  # shellcheck disable=SC2154
   echo 'export PATH="$HOME/bin_compciv:$PATH"' >> "$shell_file"
   
   # shellcheck source=/dev/null

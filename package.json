@@ -8,6 +8,6 @@
   "devDependencies": {
     "atom-package-manager": "*",
     "gulp": "*",
-    "grunt-cli": "*",
+    "grunt-cli": "*"
   }
 }

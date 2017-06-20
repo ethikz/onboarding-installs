@@ -330,7 +330,7 @@ if [[ -f "$HOME/.laptop.local" || "$HOME/send-message" ]]; then
   # shellcheck source=/dev/null
   cd ~/ || exit
 
-  if [ -f "$HOME/.laptop.local"]; then
+  if [ -f "$HOME/.laptop.local" ]; then
     chmod +x .laptop.local
     ./.laptop.local
   fi

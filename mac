@@ -51,6 +51,8 @@ append_to_file() {
 }
 export -f append_to_file
 
+export shell_file
+
 create_zshrc_and_set_it_as_shell_file() {
   if [ ! -f "$HOME/.zshrc" ]; then
     curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.zshrc

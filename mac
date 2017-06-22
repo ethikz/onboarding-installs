@@ -9,13 +9,7 @@ echo "Do you have Xcode already installed? [y/N]"
 read -r -n 1 response
 
 if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
-    xcode-select -p > /dev/null 2>&1
-    
-    # shellcheck disable=SC2181
-    if [ $? -ne 0 ]
-    then
-        xcode-select --install
-    fi
+    xcode-select --install
 elif [ "$response" = "n" ] || [ "$response" = "N" ]; then
     bold=$(tput bold)
     normal=$(tput sgr0)

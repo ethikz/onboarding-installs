@@ -258,7 +258,7 @@ if hash rvm &> /dev/null; then
   echo "RVM already installed"
 else
   echo "Installing RVM..."
-  curl -sSL https://get.rvm.io | bash -s stable --ruby --auto-dotfiles
+  curl -sSL https://get.rvm.io | grep -v __rvm_print_headline | bash -s stable --ruby --auto-dotfiles
   
   # shellcheck source=/dev/null
   source "$HOME/.rvm/scripts/rvm"

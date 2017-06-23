@@ -50,14 +50,11 @@ need to push code to GitHub.
 
 **Once the script is done, quit and relaunch Terminal.**
 
-More [detailed instructions with a video][video] are available in the Wiki.
-
 It is highly recommended to run the script regularly to keep your computer up
 to date. Once the script has been installed, you'll be able to run it at your
 convenience by typing `laptop` and pressing `return` in your Terminal.
 
 [Spotlight]: https://support.apple.com/en-us/HT204014
-[video]: https://github.com/monfresh/laptop/wiki/Detailed-installation-instructions-with-video
 
 Debugging
 ---------

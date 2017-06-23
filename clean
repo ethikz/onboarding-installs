@@ -19,3 +19,5 @@ if [ -f "$HOME/Brewfile" ]; then
 fi
 
 sudo rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
+
+chsh -s /bin/bash

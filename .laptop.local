@@ -42,7 +42,7 @@ fi
 
 if [ -d "$HOME/.oh-my-zsh" ]; then
    mkdir ~/.oh-my-zsh/
-   mkdir ~/.oh-my-zsh//themes
+   mkdir ~/.oh-my-zsh/themes
    wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
    cd .. || exit
 fi

@@ -81,9 +81,9 @@ What it sets up
 * [Zsh Themes] themse for shell
 * [Dotfiles] things like .zshrc, .vimrc for same configuration across computers
 * [Java]
-* [Alfred]
-* [Flowdock]
-* [Google Chrome] browser
+* [Alfred] Spotlight replacement
+* [Flowdock] Chat program like Slack
+* [Google Chrome]
 * [Citrix Receiver]
 * [Adobe Creative Cloud]
 * [Android Studio]
@@ -165,7 +165,6 @@ above to get started. It lets you install the following tools and Mac apps:
 [Atom]: https://atom.io/
 [Firefox]: https://www.mozilla.org/en-US/firefox/new/
 [iTerm2]: http://iterm2.com/
-[Redis]: http://redis.io/
 
 Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.

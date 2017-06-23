@@ -10,11 +10,11 @@ if [ ! -d "$HOME/bin_compciv/jq" ]; then
   mkdir ~/bin_compciv
   curl http://stedolan.github.io/jq/download/linux64/jq -o ~/bin_compciv/jq
   chmod a+x ~/bin_compciv/jq
-  
+
   # shellcheck disable=SC2016
   # shellcheck disable=SC2154
   echo 'export PATH="$HOME/bin_compciv:$PATH"' >> "$shell_file"
-  
+
   # shellcheck source=/dev/null
   source "$shell_file"
 fi
@@ -23,14 +23,14 @@ fi
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
-  
+
   # shellcheck disable=SC2039
   echo -n "What is your BB&T email?"
   read -r response
 
   if [ ! -f "$HOME/.ssh/$response" ]; then
     ssh-keygen -t rsa -C "$response" -P "" -f "$response"
-    
+
     pbcopy < "$HOME/.ssh/$response"
     pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
     export pubkey
@@ -61,7 +61,11 @@ if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
 fi
 
 if [ ! -f "$HOME/.atom/atom_packages.txt" ]; then
-  mkdir ~/.atom && cd ~/.atom || exit
+  if [ ! -d "$HOME/.atom/" ]; then
+    mkdir ~/.atom
+  fi
+
+  cd ~/.atom || exit
   curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.atom/atom_packages.txt
   chmod +x "$HOME/.atom/atom_packages.txt"
   apm install --packages-file atom_packages.txt

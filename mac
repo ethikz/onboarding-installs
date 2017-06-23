@@ -22,12 +22,12 @@ fi
 
 
 fancy_echo() {
-  local fmt="$1"; shift                                                               
-  
+  local fmt="$1"; shift
+
   # shellcheck disable=SC2059
   printf "\n$fmt\n" "$@"
 }
-export -f fancy_echo 
+export -f fancy_echo
 
 append_to_file() {
   # shellcheck disable=SC2039
@@ -74,10 +74,10 @@ change_shell_to_zsh() {
   fancy_echo "Please enter your password to continue."
   echo "Note that there won't be visual feedback when you type your password."
   echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
-  
+
   create_zshrc_and_set_it_as_shell_file
   chsh -s "$(which zsh)"
-  
+
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
 }
@@ -167,8 +167,8 @@ latest_installed_ruby() {
 switch_to_latest_ruby() {
   # shellcheck disable=SC1091
   rvm use "ruby-$(latest_installed_ruby)"
-  
-  append_to_file "$shell_file" "alias latest-ruby='$(latest_installed_ruby)"
+
+  append_to_file "$shell_file" "alias latest-ruby='prompt_ruby_info"
 }
 
 append_to_file "$shell_file" "alias laptop='bash <(curl -s https://raw.githubusercontent.com/ethikz/onboarding-installs/master/laptop)'"
@@ -178,9 +178,6 @@ if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-    
-    # shellcheck disable=SC2016
-    append_to_file "$shell_file" 'export PATH="/usr/local/bin:$PATH"'
 else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
@@ -264,14 +261,12 @@ if hash rvm &> /dev/null; then
 else
   echo "Installing RVM..."
   curl -sSL https://get.rvm.io | grep -v __rvm_print_headline | bash -s stable --ruby --auto-dotfiles
-  
+
   # shellcheck source=/dev/null
   source "$HOME/.rvm/scripts/rvm"
-  
+
   rvm requirements
 
-  append_to_file "$shell_file" "rvm use ruby-$(latest_installed_ruby)"
-  
   switch_to_latest_ruby
 fi
 
@@ -304,13 +299,13 @@ if [ -z "$CI" ] && no_zsh_frameworks && no_prompt_customizations_in_shell_file; 
   if [ "$response" = "y" ]; then
     if ! grep -qs "prompt_ruby_info()" "$shell_file"; then
       cat <<EOT >> "$shell_file"
-  
-  prompt_ruby_info() {
-    if [ -f ".ruby-version" ]; then
-      cat .ruby-version
-    fi
-  }
-EOT
+
+        prompt_ruby_info() {
+          if [ -f ".ruby-version" ]; then
+            cat .ruby-version
+          fi
+        }
+      EOT
     fi
   else
     fancy_echo "Skipping prompt customization."
@@ -325,7 +320,7 @@ if [ -f "$HOME/.laptop.local" ] || [ -f "$HOME/send-message" ]; then
     chmod +x .laptop.local
     ./.laptop.local
   fi
-  
+
   if [ -f "$HOME/send-message" ]; then
     chmod +x send-message
     ./send-message
@@ -336,7 +331,7 @@ fi
 if [ -f "/Applications/SizeUp.app" ]; then
    cd ~/Downloads || exit
    curl -O 70.63.134.210/Design\ Assets/Software/Licenses/SizeUp.sizeuplicense
-   open ~/Downloads/SizeUp.sizeuplicense 
+   open ~/Downloads/SizeUp.sizeuplicense
 fi
 
 
@@ -345,7 +340,7 @@ number=0
 while read -r app; do
 
      [[ "$app" =~ ^'cask_args'.*$ || "$app" =~ ^'tap'.*$ || "$app" =~ ^'brew'.*$ ]] && continue
-     
+
      newApp=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " | sed -e 's/-/\ /g' | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
 
      if app_is_installed "${newApp}"; then
@@ -354,7 +349,7 @@ while read -r app; do
         brew cask install "${newApp}"
         defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/${newApp}.app</string><key>_CFURLStringType</key><integer>${number}</integer></dict></dict></dict>"
      fi
-     
+
      number=$((number + 1))
 done < "$file"
 

@@ -299,13 +299,13 @@ if [ -z "$CI" ] && no_zsh_frameworks && no_prompt_customizations_in_shell_file; 
   if [ "$response" = "y" ]; then
     if ! grep -qs "prompt_ruby_info()" "$shell_file"; then
       cat <<EOT >> "$shell_file"
-
-        prompt_ruby_info() {
-          if [ -f ".ruby-version" ]; then
-            cat .ruby-version
-          fi
-        }
-      EOT
+  
+  prompt_ruby_info() {
+    if [ -f ".ruby-version" ]; then
+      cat .ruby-version
+    fi
+  }
+EOT
     fi
   else
     fancy_echo "Skipping prompt customization."

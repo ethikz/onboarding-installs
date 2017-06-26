@@ -1,18 +1,14 @@
-Laptop
+Onboarding Installs
 ======
 [![Build Status](https://travis-ci.org/ethikz/onboarding-installs.svg)](https://travis-ci.org/ethikz/onboarding-installs)
 
-Laptop is a script to set up an OS X computer for web development, and to keep
+Onboarding Installs is a script to set up an OS X computer for web development, and to keep
 it up to date.
 
 It can be run multiple times on the same machine safely. It installs,
 upgrades, or skips packages based on what is already installed on the machine.
 
-This particular version of the script is geared toward beginners who want to
-set up a Ruby on Rails environment on their Mac. More advanced users can
-easily [customize](#customize-in-laptoplocal) the script to install additional
-tools. To see an example of a more advanced script, check out
-[18F/laptop](https://github.com/18F/laptop).
+This particular version of the script is geared toward onboarding new employees and installing everything they need from applications to creating ssh keys and sending them to a user on Flowdock.  This helps everyone has the same basic setup with the same tool set.
 
 Requirements
 ------------
@@ -54,14 +50,11 @@ need to push code to GitHub.
 
 **Once the script is done, quit and relaunch Terminal.**
 
-More [detailed instructions with a video][video] are available in the Wiki.
-
 It is highly recommended to run the script regularly to keep your computer up
 to date. Once the script has been installed, you'll be able to run it at your
 convenience by typing `laptop` and pressing `return` in your Terminal.
 
 [Spotlight]: https://support.apple.com/en-us/HT204014
-[video]: https://github.com/monfresh/laptop/wiki/Detailed-installation-instructions-with-video
 
 Debugging
 ---------
@@ -88,9 +81,9 @@ What it sets up
 * [Zsh Themes] themse for shell
 * [Dotfiles] things like .zshrc, .vimrc for same configuration across computers
 * [Java]
-* [Alfred]
-* [Flowdock]
-* [Google Chrome] browser
+* [Alfred] Spotlight replacement
+* [Flowdock] Chat program like Slack
+* [Google Chrome]
 * [Citrix Receiver]
 * [Adobe Creative Cloud]
 * [Android Studio]
@@ -138,12 +131,21 @@ Customize in `~/.laptop.local` and `~/Brewfile.local`
 -----------------------------------------------------
 ```sh
 # Go to your OS X user's root directory
-cd ~
+cd ~ || exit
 
 # Download the sample files to your computer
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac
-curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile.local
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/clean
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/.laptop.local
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/npm-packages
+
+# Change permission to be able to execute file
+chmod a+x mac clean .laptop.local
+
+/usr/bin/env bash mac 2>&1 | tee ~/laptop.log
+
+cd ~ || exit
 
 # open the files in Sublime Text
 atom .laptop.local
@@ -159,12 +161,10 @@ above to get started. It lets you install the following tools and Mac apps:
 * [Atom] - GitHub's open source text editor
 * [Firefox] for testing your Rails app on a browser other than Chrome or Safari
 * [iTerm2] - an awesome replacement for the OS X Terminal
-* [Redis] for storing key-value data
 
 [Atom]: https://atom.io/
 [Firefox]: https://www.mozilla.org/en-US/firefox/new/
 [iTerm2]: http://iterm2.com/
-[Redis]: http://redis.io/
 
 Write your customizations such that they can be run safely more than once.
 See the `mac` script for examples.

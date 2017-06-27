@@ -44,7 +44,7 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
    mkdir ~/.oh-my-zsh/
    mkdir ~/.oh-my-zsh/themes
 else
-  wget -r ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
+  wget -r --no-parent ~/.oh-my-zsh/themes https://github.com/ethikz/dotfiles/tree/master/zsh_themes
   cd .. || exit
 fi
 

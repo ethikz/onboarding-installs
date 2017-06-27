@@ -347,14 +347,12 @@ while read -r app; do
     echo "${cleanName}" | sed '/^\s*$/d'
 
     if brew cask ls --versions "${cleanName}" | sed '/^\s*$/d'; then
-      defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$(echo "${cleanName}" | sed '/^\s*$/d'").app</string><key>_CFURLStringType</key><integer>${number}</integer></dict></dict></dict>"
-      # echo "Package ${cleanName} is installed"
+      defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$(echo "${cleanName}" | sed '/^\s*$/d').app</string><key>_CFURLStringType</key><integer>${number}</integer></dict></dict></dict>"
     elif brew cask ls --versions ""; then
       continue
     else
-      brew cask install "${newApp}"
-      defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/"${cleanName}" | sed '/^\s*$/d'.app</string><key>_CFURLStringType</key><integer>${number}</integer></dict></dict></dict>"
-      echo "Package ${cleanName} is not installed"
+      brew cask install "${cleanName}"
+      defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$(echo "${cleanName}" | sed '/^\s*$/d').app</string><key>_CFURLStringType</key><integer>${number}</integer></dict></dict></dict>"
     fi
 
      number=$((number + 1))

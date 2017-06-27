@@ -23,18 +23,17 @@ fi
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
+  
+  while [[ -z "$response" ]]
+  do
+    read -s -p "What is your BB&T email?" response
+  done
 
-  # shellcheck disable=SC2039
-  echo -n "What is your BB&T email?"
-  read -r response
+  ssh-keygen -t rsa -C "$response" -P "" -f "$response"
 
-  if [ ! -f "$HOME/.ssh/$response" ]; then
-    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
-
-    pbcopy < "$HOME/.ssh/$response"
-    pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
-    export pubkey
-  fi
+  pbcopy < "$HOME/.ssh/$response"
+  pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
+  export pubkey
 
   cd .. || exit
 fi

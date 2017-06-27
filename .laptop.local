@@ -57,7 +57,7 @@ if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
   rm -rf fonts
 fi
 
-if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
+if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then 
   mkdir "$HOME/.vim/bundle/Vundle.vim"
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall

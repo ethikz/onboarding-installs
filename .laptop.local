@@ -24,9 +24,11 @@ if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
   
+  # shellcheck disable=SC2039
   while [[ -z "$response" ]]
   do
-    read -s -p "What is your BB&T email?" response
+    # shellcheck disable=SC2039
+    read -s -p -r "What is your BB&T email?" response
   done
 
   ssh-keygen -t rsa -C "$response" -P "" -f "$response"

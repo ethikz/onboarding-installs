@@ -4,14 +4,16 @@
 # Be prepared to turn your laptop (or desktop)
 # into an awesome development machine.
 
+read -s -p "Please enter your computer password so that you do not have to enter it multiple times the script will ask you to: " PASS
+export PASS
 
 echo "Do you have Xcode already installed? [y/N]"
 read -r -n 1 response
 
 if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
-    sudo xcodebuild -license accept
-    sudo xcode-select --switch /Library/Developer/CommandLineTools
-    sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+    sudo -S $PASS xcodebuild -license accept
+    sudo -S $PASS xcode-select --switch /Library/Developer/CommandLineTools
+    sudo -S $PASS xcode-select --switch /Applications/Xcode.app/Contents/Developer
     xcode-select --install
 elif [ "$response" = "n" ] || [ "$response" = "N" ]; then
     bold=$(tput bold)
@@ -76,7 +78,7 @@ change_shell_to_zsh() {
   echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
 
   create_zshrc_and_set_it_as_shell_file
-  chsh -s "$(which zsh)"
+  sudo -S $PASS chsh -s "$(which zsh)"
 
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."
@@ -227,6 +229,7 @@ if ! brew_is_installed "node"; then
     fancy_echo 'Installing nvm and lts Node.js and npm...'
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
     export NVM_DIR="$HOME/.nvm"
+    
     # shellcheck source=/dev/null
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     nvm install node --lts
@@ -271,9 +274,9 @@ else
   switch_to_latest_ruby
 fi
 
-sudo chmod -R a+X "/Library"
-sudo chmod -R a+X "$HOME/.rvm/"
-sudo chown -R "$(id -u):$(id -g)" "/Library/Ruby"
+sudo -S $PASS chmod -R a+X "/Library"
+sudo -S $PASS chmod -R a+X "$HOME/.rvm/"
+sudo -S $PASS chown -R "$(id -u):$(id -g)" "/Library/Ruby"
 
 fancy_echo 'Updating Rubygems...'
 gem update --system

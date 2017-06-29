@@ -4,7 +4,7 @@
 # Be prepared to turn your laptop (or desktop)
 # into an awesome development machine.
 
-read -s -p "Please enter your computer password so that you do not have to enter it multiple times the script will ask you to: " PASS
+read -r -s -p "Please enter your computer password so that you do not have to enter it multiple times the script will ask you to: " PASS
 export PASS
 
 echo "Do you have Xcode already installed? [y/N]"
@@ -78,7 +78,7 @@ change_shell_to_zsh() {
   echo "Type it slowly and press return, or press control-c to cancel the switch to zsh and exit the script."
 
   create_zshrc_and_set_it_as_shell_file
-  echo $PASS | sudo -S chsh -s "$(which zsh)"
+  sudo -S <<< "$PASS" chsh -s "$(which zsh)"
 
   echo "Note that you can always switch back to ${bold}bash${normal} if you change your mind."
   echo "The instructions for changing shells manually are available in the README."

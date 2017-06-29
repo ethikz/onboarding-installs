@@ -18,6 +18,7 @@ if [ ! -d "$HOME/bin_compciv/jq" ]; then
   # shellcheck source=/dev/null
   source "$shell_file"
 
+  # shellcheck disable=SC2039
   if ! type "bindkey" > /dev/null; then
     echo ""
   fi

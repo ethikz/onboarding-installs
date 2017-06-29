@@ -4,14 +4,14 @@
 # Be prepared to turn your laptop (or desktop)
 # into an awesome development machine.
 
-read -r -s -p "Please enter your computer password so that you do not have to enter it multiple times the script will ask you to: " PASS
+read -r -s "Please enter your computer password so that you do not have to enter it multiple times the script will ask you to: " PASS
 
-echo "\n\nDo you have Xcode already installed? [y/N]"
+echo -e "\n\n"
 
-read -r -n 1 response
+read -r -s "Do you have Xcode already installed? [y/N]" response
 
 if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
-    echo "\n"
+    echo -e "\n"
     sudo -S <<< "$PASS" xcodebuild -license accept
     sudo -S <<< "$PASS" xcode-select --switch /Library/Developer/CommandLineTools
     sudo -S <<< "$PASS" xcode-select --switch /Applications/Xcode.app/Contents/Developer
@@ -20,7 +20,7 @@ if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
     #    xcode-select --install
     #fi
     
-    if [ ! xcode-select --install 2>&1 | grep installed ]; then
+    if ! xcode-select --install 2>&1 | grep installed; then
         xcode-select --install
     fi
 elif [ "$response" = "n" ] || [ "$response" = "N" ]; then

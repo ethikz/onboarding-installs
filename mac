@@ -7,16 +7,20 @@
 read -r -s -p "Please enter your computer password so that you do not have to enter it multiple times the script will ask you to: " PASS
 
 echo "Do you have Xcode already installed? [y/N]"
+
 read -r -n 1 response
 
 if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
+    echo "\n"
     sudo -S <<< "$PASS" xcodebuild -license accept
     sudo -S <<< "$PASS" xcode-select --switch /Library/Developer/CommandLineTools
     sudo -S <<< "$PASS" xcode-select --switch /Applications/Xcode.app/Contents/Developer
+    
     xcode-select --install
 elif [ "$response" = "n" ] || [ "$response" = "N" ]; then
     bold=$(tput bold)
     normal=$(tput sgr0)
+    
     echo "Install Xcode first.  Once finished press the ${bold}Enter${normal} key to continue."
     read -r -p "Press enter to continue"
 fi

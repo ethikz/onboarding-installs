@@ -30,14 +30,16 @@ if [ ! -d "$HOME/.ssh" ]; then
   cd ~/.ssh || exit
   
   # shellcheck disable=SC2039
-  # shellcheck disable=SC2039
-  read -s -p -r "What is your BB&T email?" response
+  echo -n "What is your BB&T email?"
+  read -r response
 
-  ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+  if [ ! -f "$HOME/.ssh/$response" ]; then
+    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
 
-  pbcopy < "$HOME/.ssh/$response"
-  pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
-  export pubkey
+    pbcopy < "$HOME/.ssh/$response"
+    pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
+    export pubkey
+  fi
 
   cd .. || exit
 fi

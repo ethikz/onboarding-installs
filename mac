@@ -6,7 +6,7 @@
 
 read -r -s -p "Please enter your computer password so that you do not have to enter it multiple times the script will ask you to: " PASS
 
-echo "Do you have Xcode already installed? [y/N]"
+echo "\n\nDo you have Xcode already installed? [y/N]"
 
 read -r -n 1 response
 

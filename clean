@@ -7,16 +7,20 @@ if [[ $? == 0 ]] ; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
 fi
 
-#if [ -f "$HOME/Brewfile" ]; then
-#  file="$HOME/Brewfile"
-#  while read -r app; do
-#    [[ "$app" =~ ^'cask_args'.*$ || "$app" =~ ^'tap'.*$ || "$app" =~ ^'brew'.*$ ]] && continue
-#  
-#    sudo rm -rf "$app"
-#
-#    echo "$app"
-#  done < "$file"
-#fi
+if [ -f "$HOME/Brewfile" ]; then
+  file="$HOME/Brewfile"
+  
+  while read -r app; do
+    [[ "$app" =~ ^'cask_args'.*$ || "$app" =~ ^'tap'.*$ || "$app" =~ ^'brew'.*$ ]] && continue
+    
+    appName=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " | sed -e 's/-/\ /g')
+    cleanName=$(echo "${appName}" | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
+    
+    echo "${cleanName}" | sed '/^\s*$/d"
+  
+    sudo rm -rf "${cleanName}" | sed '/^\s*$/d"
+  done < "$file"
+fi
 
 sudo rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
 

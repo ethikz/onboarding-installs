@@ -16,7 +16,11 @@ if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
     sudo -S <<< "$PASS" xcode-select --switch /Library/Developer/CommandLineTools
     sudo -S <<< "$PASS" xcode-select --switch /Applications/Xcode.app/Contents/Developer
     
-    if ! type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
+    #if ! type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
+    #    xcode-select --install
+    #fi
+    
+    if [ ! xcode-select --install 2>&1 | grep installed ]; then
         xcode-select --install
     fi
 elif [ "$response" = "n" ] || [ "$response" = "N" ]; then

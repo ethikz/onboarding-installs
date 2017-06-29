@@ -22,6 +22,6 @@ if [ -f "$HOME/Brewfile" ]; then
   done < "$file"
 fi
 
-sudo rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
+sudo -S $PASS rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
 
-chsh -s /bin/bash
+sudo -S $PASS chsh -s /bin/bash

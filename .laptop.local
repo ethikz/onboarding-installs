@@ -30,11 +30,8 @@ if [ ! -d "$HOME/.ssh" ]; then
   cd ~/.ssh || exit
   
   # shellcheck disable=SC2039
-  while [[ -z "$response" ]]
-  do
-    # shellcheck disable=SC2039
-    read -s -p -r "What is your BB&T email?" response
-  done
+  # shellcheck disable=SC2039
+  read -s -p -r "What is your BB&T email?" response
 
   ssh-keygen -t rsa -C "$response" -P "" -f "$response"
 

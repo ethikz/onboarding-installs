@@ -17,6 +17,10 @@ if [ ! -d "$HOME/bin_compciv/jq" ]; then
 
   # shellcheck source=/dev/null
   source "$shell_file"
+
+  if ! type "bindkey" > /dev/null; then
+    break
+  fi
 fi
 
 

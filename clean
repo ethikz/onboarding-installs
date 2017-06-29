@@ -18,10 +18,10 @@ if [ -f "$HOME/Brewfile" ]; then
     
     echo "${cleanName}" | sed '/^\s*$/d"
   
-    sudo rm -rf "${cleanName}" | sed '/^\s*$/d"
+    echo $PASS | sudo -S rm -rf "${cleanName}" | sed '/^\s*$/d"
   done < "$file"
 fi
 
-sudo -S $PASS rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
+echo $PASS | sudo -S rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
 
-sudo -S $PASS chsh -s /bin/bash
+echo $PASS | sudo -S chsh -s /bin/bash

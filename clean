@@ -15,13 +15,11 @@ if [ -f "$HOME/Brewfile" ]; then
     
     appName=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " | sed -e 's/-/\ /g')
     cleanName=$(echo "${appName}" | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
-    
-    echo "${cleanName}" | sed '/^\s*$/d'
   
-    echo "$PASS" | sudo -S rm -rf "${cleanName}" | sed '/^\s*$/d'
+    sudo -S <<< "$PASS" rm -rf "${cleanName}" | sed '/^\s*$/d'
   done < "$file"
 fi
 
-echo "$PASS" | sudo -S rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
+sudo -S <<< "$PASS" rm -rf /usr/local .* Brewfile laptop.log clean mac npm-packages Downloads/onboarding-installs bin_compciv/ SizeUp.sizeuplicense
 
-echo "$PASS" | sudo -S chsh -s /bin/bash
+sudo -S <<< "$PASS" chsh -s /bin/bash

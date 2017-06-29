@@ -16,9 +16,9 @@ if [ -f "$HOME/Brewfile" ]; then
     appName=$(echo "${app}" | sed -n " s,[^']*'\([^']*\).*,\1,p " | sed -e 's/-/\ /g')
     cleanName=$(echo "${appName}" | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')
     
-    echo "$cleanName | sed '/^\s*$/d"
+    echo "${cleanName}" | sed '/^\s*$/d'
   
-    echo "$PASS" | sudo -S rm -rf "$cleanName | sed '/^\s*$/d"
+    echo "$PASS" | sudo -S rm -rf "${cleanName}" | sed '/^\s*$/d'
   done < "$file"
 fi
 

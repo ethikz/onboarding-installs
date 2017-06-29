@@ -19,7 +19,7 @@ if [ ! -d "$HOME/bin_compciv/jq" ]; then
   source "$shell_file"
 
   if ! type "bindkey" > /dev/null; then
-    break
+    echo ""
   fi
 fi
 

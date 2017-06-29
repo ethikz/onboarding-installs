@@ -11,9 +11,9 @@ echo "Do you have Xcode already installed? [y/N]"
 read -r -n 1 response
 
 if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
-    echo $PASS | sudo -S xcodebuild -license accept
-    echo $PASS | sudo -S $PASS xcode-select --switch /Library/Developer/CommandLineTools
-    echo $PASS | sudo -S $PASS xcode-select --switch /Applications/Xcode.app/Contents/Developer
+    sudo -S <<< "$PASS" xcodebuild -license accept
+    sudo -S <<< "$PASS" xcode-select --switch /Library/Developer/CommandLineTools
+    sudo -S <<< "$PASS" xcode-select --switch /Applications/Xcode.app/Contents/Developer
     xcode-select --install
 elif [ "$response" = "n" ] || [ "$response" = "N" ]; then
     bold=$(tput bold)
@@ -270,9 +270,9 @@ else
   switch_to_latest_ruby
 fi
 
-echo $PASS | sudo -S chmod -R a+X "/Library"
-echo $PASS | sudo -S chmod -R a+X "$HOME/.rvm/"
-echo $PASS | sudo -S chown -R "$(id -u):$(id -g)" "/Library/Ruby"
+sudo -S <<< "$PASS" chmod -R a+X "/Library"
+sudo -S <<< "$PASS" chmod -R a+X "$HOME/.rvm/"
+sudo -S <<< "$PASS" chown -R "$(id -u):$(id -g)" "/Library/Ruby"
 
 fancy_echo 'Updating Rubygems...'
 gem update --system

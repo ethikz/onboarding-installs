@@ -85,8 +85,8 @@ if [ ! -f "$HOME/Library/Fonts/*Powerline.*" ]; then
 fi
 
 if [ ! -d "$HOME/.vim/colors" ]; then
-  mkdir $HOME/.vim/colors
-  cd $HOME/.vim/colors || exit
+  mkdir "$HOME/.vim/colors"
+  cd "$HOME/.vim/colors" || exit
 
   if [ ! -f "$HOME/.vim/colors/molokai" ]; then
     curl --remote-name https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim

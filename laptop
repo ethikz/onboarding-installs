@@ -2,6 +2,9 @@
 
 cd ~ || exit
 
+# Disable system integrity to allow for sudo
+csrutil disable
+
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/clean
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile

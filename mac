@@ -171,7 +171,7 @@ latest_installed_ruby() {
 
 switch_to_latest_ruby() {
   # shellcheck disable=SC1091
-  rvm use "ruby-${latest_installed_ruby}"
+  rvm use "ruby-$(latest_installed_ruby)"
 
   append_to_file "$shell_file" "alias latest-ruby='prompt_ruby_info'"
 }

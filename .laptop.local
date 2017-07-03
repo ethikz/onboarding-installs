@@ -3,6 +3,28 @@
 fancy_echo "Running your customizations from ~/.laptop.local ..."
 
 
+append_to_file() {
+  # shellcheck disable=SC2039
+  local file="$1"
+  # shellcheck disable=SC2039
+  local text="$2"
+
+  if [ "$file" = "$HOME/.zshrc" ]; then
+    if [ -w "$HOME/.zshrc.local" ]; then
+      file="$HOME/.zshrc.local"
+    else
+      file="$HOME/.zshrc"
+    fi
+  elif [ "$file" = "$HOME/.bash_profile" ]; then
+    file="$HOME/.bash_profile"
+  fi
+
+  if ! grep -qs "^$text$" "$file"; then
+    printf "\n%s\n" "$text" >> "$file"
+  fi
+}
+
+
 if [ ! -d "$HOME/bin_compciv/jq" ]; then
   # shellcheck source=/dev/null
   cd ~/ || exit

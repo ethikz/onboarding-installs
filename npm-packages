@@ -1,4 +1,15 @@
 npm-bundle
+npm
 atom-package-manager
 gulp
+babelify
+browserify
+grunt
 grunt-cli
+npm-check-updates
+node-sass
+vinyl-fs
+snyk
+eslinti
+axe-cli
+pancake

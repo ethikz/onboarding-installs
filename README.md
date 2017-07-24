@@ -137,6 +137,7 @@ cd ~ || exit
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/mac
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/clean
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Brewfile
+curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/Gemfile
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/.laptop.local
 curl --remote-name https://raw.githubusercontent.com/ethikz/onboarding-installs/master/npm-packages
 

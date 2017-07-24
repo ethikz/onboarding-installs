@@ -1,21 +1,13 @@
 #!/bin/bash
 
-TOKEN="ODM4NzUzZjAxNDk3YTc4NWIwMjkyOGFkM2FjOTQ2MjE="
-API_URL="https://${TOKEN}@api.flowdock.com/users"
-#API_URL="https://ODM4NzUzZjAxNDk3YTc4NWIwMjkyOGFkM2FjOTQ2MjE=@api.flowdock.com/private/${User}/messages"
+read -r -p 'Please enter your Flowdock Login (Should be the same as your BB&T Email): ' USER
 
-#$pubkey
+read -r -s -p 'Please enter your Flowdock Password: ' PASS
 
-URL=$(curl -i -s \
--H "Accept: application/json" \
--H "Content-Type:application/json" \
--H "Authorization: Basic ${TOKEN}" \
-"${API_URL}") 
+PUB=$(cat "$HOME/.ssh/${USER}.pub")
+PUBKEY=$(echo ${PUB})
+USERID=$(curl -k -L -u ${USER}:${PASS} "https://api.flowdock.com/users" | jq -r '.[] | select(.email == "'"${USER}"'") | .id')
+GITADMIN=$(curl -k -L -u ${USER}:${PASS} "https://api.flowdock.com/users" | jq -r '.[] | select(.email == "jchristensen@bbandt.com") | .id')
+SENDMSG=$(curl -k -L -i -u ${USER}:${PASS} "https://api.flowdock.com/private/${GITADMIN}/messages" -H "Content-Type: application/json" -d '{ "event": "message", "content": "'"${PUBKEY}"'" }')
 
-echo "${URL}" | jq '.[] | select(.email=="jchristensen@bbandt.com") | .'
-    
-
-#curl -X POST -H "Content-Type: application/json" \
-#    --data "{ \"event\": \"message\", \"content\": \"This is my pub key for git\" }" \
-#    ${API_URL}
-
+echo 'Send message '"${SENDMSG}"

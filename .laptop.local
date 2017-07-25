@@ -72,10 +72,10 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
    mkdir ~/.oh-my-zsh/custom
 else
   cd ~/.oh-my-zsh/custom/themes
-  wget -r -nH -nd -np https://github.com/ethikz/dotfiles/tree/master/zsh/custom/themes ~/.oh-my-zsh/custom/themes
+  wget -r -nH -nd -np https://github.com/ethikz/dotfiles/tree/master/zsh/custom/themes
   
   cd ~/.oh-my-zsh/custom/themes
-  wget -r -nH -nd -np https://github.com/ethikz/dotfiles/tree/master/zsh/custom/plugins ~/.oh-my-zsh/custom/plugins
+  wget -r -nH -nd -np https://github.com/ethikz/dotfiles/tree/master/zsh/custom/plugins
   
   cd .. || exit
 fi

@@ -70,6 +70,7 @@ fi
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
    mkdir ~/.oh-my-zsh/
    mkdir ~/.oh-my-zsh/custom/themes
+   mkdir ~/.oh-my-zsh/custom/plugins
 else
   wget -r --no-parent https://github.com/ethikz/dotfiles/tree/master/zsh/custom/themes ~/.oh-my-zsh/custom/themes
   wget -r --no-parent https://github.com/ethikz/dotfiles/tree/master/zsh/custom/plugins ~/.oh-my-zsh/custom/plugins

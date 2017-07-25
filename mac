@@ -60,12 +60,8 @@ export shell_file
 
 create_zshrc_and_set_it_as_shell_file() {
   if [ ! -f "$HOME/.zshrc" ]; then
-    echo -e "\n\n What is the directory location for your repos (it needs to be typed out)?\n(Example: ${HOME}/Development/)\n $HOME is your user directory (/Users/name/)"
-    read -r -n 1 response
-
-    git clone gitdesign@70.63.134.210:team-dotfiles $response
-    ln -s $response/team-dotfiles/.zshrc ~/.zshrc
-    ln -s $response/team-dotfiles/.vimrc ~/.vimrc
+    curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.zshrc
+    curl --remote-name https://raw.githubusercontent.com/ethikz/dotfiles/master/.vimrc
   fi
 
   shell_file="$HOME/.zshrc"

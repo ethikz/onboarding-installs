@@ -20,7 +20,7 @@ if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
 elif [ "$response" = "n" ] || [ "$response" = "N" ]; then
     bold=$(tput bold)
     normal=$(tput sgr0)
-    
+
     echo "Install Xcode first.  Once finished press the ${bold}Enter${normal} key to continue."
     read -r -p "Press enter to continue"
 fi
@@ -172,8 +172,6 @@ latest_installed_ruby() {
 switch_to_latest_ruby() {
   # shellcheck disable=SC1091
   rvm use "ruby-$(latest_installed_ruby)"
-
-  append_to_file "$shell_file" "alias latest-ruby='prompt_ruby_info'"
 }
 
 append_to_file "$shell_file" "alias laptop='bash <(curl -s https://raw.githubusercontent.com/ethikz/onboarding-installs/master/laptop)'"
@@ -228,7 +226,7 @@ if ! brew_is_installed "node"; then
     fancy_echo 'Installing nvm and lts Node.js and npm...'
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
     export NVM_DIR="$HOME/.nvm"
-    
+
     # shellcheck source=/dev/null
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     nvm install node --lts
@@ -302,7 +300,7 @@ if [ -z "$CI" ] && no_zsh_frameworks && no_prompt_customizations_in_shell_file; 
   if [ "$response" = "y" ]; then
     if ! grep -qs "prompt_ruby_info()" "$shell_file"; then
       cat <<EOT >> "$shell_file"
-  
+
   prompt_ruby_info() {
     if [ -f ".ruby-version" ]; then
       cat .ruby-version

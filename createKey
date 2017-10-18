@@ -6,7 +6,7 @@ if [ ! -d "$HOME/.ssh" ]; then
 
   # shellcheck disable=SC2039
   echo -n "What is your BB&T email?"
-  read -r response
+  read -r email
 
   if [ ! -f "$HOME/.ssh/$response" ]; then
     ssh-keygen -t rsa -C "$response" -P "" -f "$response"
@@ -15,6 +15,18 @@ if [ ! -d "$HOME/.ssh" ]; then
     pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
     export pubkey
   fi
+  
+  echo -n "What is the IP of the Git server?"
+  read -n ip
 
-  cd .. || exit
+  if [ ! -f "$HOME/.ssh/config" ]; then
+    cat > ~/.ssh/config <<ENDOFCONTENT
+      Host gitdesign
+      HostName 192.168.1.200
+      IdentityFile ~/.ssh/$email.pub
+    ENDOFCONTENT
+  fi
+
+  cd ~/ || exit
 fi
+

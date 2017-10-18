@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # shellcheck disable=SC2039
-# shellcheck disable=SC2162
 
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
@@ -19,11 +18,8 @@ if [ ! -d "$HOME/.ssh" ]; then
   fi
 
   if [ ! -f "$HOME/Downloads/config" ]; then
-    cat > ~/Downloads/config <<-ENDOFCONTENT
-    Host $USER
-    HostName $IP
-    IdentityFile ~/.ssh/$email.pub
-ENDOFCONTENT
+    content="$USER\\n$IP\\nIdentityFile ~/.ssh/$email.pub"
+    echo -e "$content" >> ~/Downloads/config
   fi
 
   cd .. || exit

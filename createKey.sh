@@ -18,8 +18,9 @@ else
   pbcopy < ~/.ssh/"$email".pub
 fi
 
-content="$USER\n$IP\nIdentityFile ~/.ssh/$email.pub"
-cat > ~/Downloads/config <<-ENDOFCONTENT
+content="$(cat ~/Downloads/config)\\nIdentityFile ~/.ssh/$email.pub"
+
+cat > ~/.ssh/config <<-ENDOFCONTENT
     $content
 ENDOFCONTENT
 

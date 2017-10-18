@@ -18,7 +18,6 @@ else
 fi
 
 content="$USER\\n$IP\\nIdentityFile ~/.ssh/$email.pub"
-echo -e "$content"
-echo -e "$content" >> ~/Downloads/config
+echo "$content" >> ~/Downloads/config
 
 cd ~/ || exit

@@ -28,4 +28,9 @@ if [ ! -f "$HOME/.ssh/config" ]; then
 ENDOFCONTENT
 fi
 
+if [ -f "$HOME/Downloads/send-message" ]; then
+  cd ~/Downloads || exit
+  ./send-message
+fi
+
 cd ~/ || exit

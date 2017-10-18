@@ -14,9 +14,7 @@ read -r -p "What is your work email?" email
 if [ ! -f "$HOME/.ssh/$email" ]; then
   ssh-keygen -t rsa -C "$email" -P "" -f "$email"
 
-  pbcopy < "$HOME/.ssh/$email"
-  pubkey=$(echo "$HOME/.ssh/$email" | pbcopy)
-  export pubkey
+  pbcopy < ~/.ssh/"$email".pub
 fi
 
 if [ ! -f "$HOME/Downloads/config" ]; then

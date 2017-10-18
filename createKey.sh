@@ -19,7 +19,7 @@ else
 fi
 
 gitConf="$(cat ~/Downloads/config)"
-key="$(IdentityFile ~/.ssh/$email.pub)"
+key="IdentityFile ~/.ssh/$email.pub"
 
 cat <<ENDOFCONTENT >> ~/Downloads/localGit
     $gitConf

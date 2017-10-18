@@ -18,7 +18,7 @@ if [ ! -d "$HOME/.ssh" ]; then
     export pubkey
   fi
 
-  if [ ! -f "$HOME/.ssh/config" ]; then
+  if [ ! -f "$HOME/Downloads/config" ]; then
     cat > ~/Downloads/config <<-ENDOFCONTENT
     Host $USER
     HostName $IP

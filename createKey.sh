@@ -14,16 +14,18 @@ read -r -p "What is your work email?" email
 
 if [ ! -f "$HOME/.ssh/$email" ]; then
   ssh-keygen -t rsa -C "$email" -P "" -f "$email"
-else
-  pbcopy < ~/.ssh/"$email".pub
 fi
 
-gitConf="$(cat ~/Downloads/config)"
-key="IdentityFile ~/.ssh/$email.pub"
+pbcopy < ~/.ssh/"$email".pub
 
-  cat <<ENDOFCONTENT >> ~/Downloads/localGit
+if [ ! -f "$HOME/.ssh/config" ]; then
+  gitConf="$(cat ~/Downloads/config)"
+  key="IdentityFile ~/.ssh/$email.pub"
+
+  cat <<ENDOFCONTENT >> ~/.ssh/config
       $gitConf
       $key
 ENDOFCONTENT
+fi
 
 cd ~/ || exit

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # shellcheck disable=SC2039
+# shellcheck disable=SC1117
 
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
@@ -17,7 +18,7 @@ else
   pbcopy < ~/.ssh/"$email".pub
 fi
 
-content="$USER\\n$IP\\nIdentityFile ~/.ssh/$email.pub"
+content="$USER\n$IP\nIdentityFile ~/.ssh/$email.pub"
 cat > ~/Downloads/config <<-ENDOFCONTENT
     $content
 ENDOFCONTENT

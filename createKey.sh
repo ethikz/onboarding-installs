@@ -18,10 +18,12 @@ else
   pbcopy < ~/.ssh/"$email".pub
 fi
 
-content="$(cat ~/Downloads/config)\\nIdentityFile ~/.ssh/$email.pub"
+gitConf="$(cat ~/Downloads/config)"
+key="$(IdentityFile ~/.ssh/$email.pub)"
 
 cat <<ENDOFCONTENT >> ~/Downloads/localGit
-    $content
+    $gitConf
+    $key
 ENDOFCONTENT
 
 cd ~/ || exit

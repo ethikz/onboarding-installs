@@ -20,7 +20,7 @@ fi
 
 content="$(cat ~/Downloads/config)\\nIdentityFile ~/.ssh/$email.pub"
 
-cat > ~/.ssh/config <<-ENDOFCONTENT
+cat <<ENDOFCONTENT >> ~/Downloads/localGit
     $content
 ENDOFCONTENT
 

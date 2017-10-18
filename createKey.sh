@@ -18,7 +18,7 @@ else
 fi
 
 content="$USER\\n$IP\\nIdentityFile ~/.ssh/$email.pub"
-cat > ~/.ssh/config <<-ENDOFCONTENT
+cat > ~/Downloads/config <<-ENDOFCONTENT
     $content
 ENDOFCONTENT
 

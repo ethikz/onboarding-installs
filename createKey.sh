@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# shellcheck disable=SC2039
+# shellcheck disable=SC2162
+
 if [ ! -d "$HOME/.ssh" ]; then
   mkdir ~/.ssh
   cd ~/.ssh || exit
@@ -16,15 +19,11 @@ if [ ! -d "$HOME/.ssh" ]; then
   fi
 
   if [ ! -f "$HOME/.ssh/config" ]; then
-    file="$HOME/Downloads/gitConfig"
-
-    while read -r app; do
-      cat > ~/.ssh/config <<ENDOFCONTENT
-        Host $USER
-        HostName $IP
-        IdentityFile ~/.ssh/$email.pub
-      ENDOFCONTENT
-    done < "$file"
+    cat > ~/Downloads/config <<-ENDOFCONTENT
+    Host $USER
+    HostName $IP
+    IdentityFile ~/.ssh/$email.pub
+ENDOFCONTENT
   fi
 
   cd .. || exit

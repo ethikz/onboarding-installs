@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ ! -d "$HOME/.ssh" ]; then
+  mkdir ~/.ssh
+  cd ~/.ssh || exit
+
+  # shellcheck disable=SC2039
+  echo -n "What is your BB&T email?"
+  read -r response
+
+  if [ ! -f "$HOME/.ssh/$response" ]; then
+    ssh-keygen -t rsa -C "$response" -P "" -f "$response"
+
+    pbcopy < "$HOME/.ssh/$response"
+    pubkey=$(echo "$HOME/.ssh/$response" | pbcopy)
+    export pubkey
+  fi
+
+  cd .. || exit
+fi

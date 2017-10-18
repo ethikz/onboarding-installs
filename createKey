@@ -16,7 +16,7 @@ if [ ! -d "$HOME/.ssh" ]; then
   fi
 
   if [ ! -f "$HOME/.ssh/config" ]; then
-    file="$HOME/gitConfig"
+    file="$HOME/Downloads/gitConfig"
 
     while read -r app; do
       cat > ~/.ssh/config <<ENDOFCONTENT

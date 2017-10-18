@@ -30,6 +30,10 @@ fi
 
 if [ -f "$HOME/Downloads/send-message" ]; then
   cd ~/Downloads || exit
+  wget "https://raw.githubusercontent.com/ethikz/onboarding-installs/master/send-message"
+  
+  chmod a+x send-message
+  
   ./send-message
 fi
 
